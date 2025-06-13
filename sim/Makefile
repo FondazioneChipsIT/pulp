@@ -43,7 +43,8 @@ else
 	$(mkfile_path)/tcl_files/rtl_vopt.tcl
 endif
 
-build: build-deps
+build:
+#build-deps
 ifndef IPAPPROX
 	$(VSIM) -c -do 'source compile.tcl; quit'
 else
@@ -61,7 +62,8 @@ else
 	@make --no-print-directory -f $(mkfile_path)/vcompile/rtl.mk lib
 endif
 
-clean: clean-deps
+clean:
+#clean-deps
 ifndef IPAPPROX
 	@mkdir -p work
 	rm -r work 

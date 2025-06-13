@@ -35,6 +35,8 @@ VLOG_ARGS += -suppress 2583 -suppress 13314 \"+incdir+\$$ROOT/rtl/includes\"
 BENDER_SIM_BUILD_DIR = sim
 BENDER_FPGA_SCRIPTS_DIR = fpga/pulp/tcl/generated
 
+CompileFlags := +acc -permissive -suppress 2583 -suppress 13314 -suppress vlog-1952
+
 .PHONY: checkout
 ifndef IPAPPROX
 Bender.lock: bender
@@ -63,8 +65,9 @@ scripts-bender-vsim: | Bender.lock
 	echo 'set ROOT [file normalize [file dirname [info script]]/..]' > $(BENDER_SIM_BUILD_DIR)/compile.tcl
 	./bender script vsim \
 		--vlog-arg="$(VLOG_ARGS)" --vcom-arg="" \
-		-t rtl -t test \
-		| grep -v "set ROOT" >> $(BENDER_SIM_BUILD_DIR)/compile.tcl
+		-t rtl -t test -t pulp -t idma \
+		| grep -v "set ROOT" >> $(BENDER_SIM_BUILD_DIR)/compile.tcl; \
+		echo 'vopt $(CompileFlags) tb_pulp -o vopt_tb' >> $(BENDER_SIM_BUILD_DIR)/compile.tcl
 
 scripts-bender-fpga: | Bender.lock
 	mkdir -p fpga/pulp/tcl/generated
