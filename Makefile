@@ -66,8 +66,7 @@ scripts-bender-vsim: | Bender.lock
 	./bender script vsim \
 		--vlog-arg="$(VLOG_ARGS)" --vcom-arg="" \
 		-t rtl -t test -t pulp -t idma \
-		| grep -v "set ROOT" >> $(BENDER_SIM_BUILD_DIR)/compile.tcl; \
-		echo 'vopt $(CompileFlags) tb_pulp -o vopt_tb' >> $(BENDER_SIM_BUILD_DIR)/compile.tcl
+		| grep -v "set ROOT" >> $(BENDER_SIM_BUILD_DIR)/compile.tcl \
 
 scripts-bender-fpga: | Bender.lock
 	mkdir -p fpga/pulp/tcl/generated

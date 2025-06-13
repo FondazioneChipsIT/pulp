@@ -11,7 +11,8 @@ VSIM_FLAGS  = -gUSE_SDVT_SPI=0 -gUSE_SDVT_CPI=0 -gBAUDRATE=115200 \
 
 SVLIB	    =  ../rtl/tb/remote_bitbang/librbs
 
-all: clean lib build opt
+all: clean build opt
+# all: clean lib build opt
 
 # build the bitbang library, needed for simulating a jtag bridge to OpenOCD
 build-deps:
@@ -38,7 +39,7 @@ simc:
 
 opt:
 ifndef IPAPPROX
-	$(VOPT) +acc=npr -o vopt_tb tb_pulp -floatparameters+tb_pulp -work work
+	$(VOPT) +acc=npr -permissive tb_pulp -o vopt_tb -work work
 else
 	$(mkfile_path)/tcl_files/rtl_vopt.tcl
 endif
@@ -55,7 +56,7 @@ endif
 lib:
 ifndef IPAPPROX
 	@$(VLIB) work
-	@chmod +w modelsim.ini
+#@chmod +w modelsim.ini
 	$(VMAP) work $(mkfile_path)/work
 else
 	@make --no-print-directory -f $(mkfile_path)/vcompile/ips.mk lib
@@ -71,6 +72,6 @@ else
 	@make --no-print-directory -f $(mkfile_path)/vcompile/ips.mk clean
 	@make --no-print-directory -f $(mkfile_path)/vcompile/rtl.mk clean
 endif
-	@touch modelsim.ini
-	@chmod +w modelsim.ini
-	rm modelsim.ini
+#@touch modelsim.ini
+#@chmod +w modelsim.ini
+#rm modelsim.ini
