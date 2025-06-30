@@ -355,7 +355,7 @@ module cluster_domain
 
         .pmu_mem_pwdn_i               ( 1'b0                         ),
         
-        .base_addr_i                  ( 4'b0001                      ),
+        .base_addr_i                  ( ClustBaseAddr[AXI_ADDR_WIDTH-1:AXI_ADDR_WIDTH-4] ),
         
         .dma_pe_evt_ack_i             ( dma_pe_evt_ack_i             ),
         .dma_pe_evt_valid_o           ( dma_pe_evt_valid_o           ),
