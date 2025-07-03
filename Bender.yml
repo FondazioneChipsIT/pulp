@@ -13,8 +13,8 @@ dependencies:
   common_cells:       { git: "https://github.com/pulp-platform/common_cells.git", version: 1.22.1 }
   tech_cells_generic: { git: "https://github.com/pulp-platform/tech_cells_generic.git", version: 0.2.6 }
   jtag_pulp:          { git: "https://github.com/pulp-platform/jtag_pulp.git", version: 0.2.0 }
-  pulp_soc:           { git: "https://github.com/pulp-platform/pulp_soc.git", version: ~4.4.0 }
-  pulp_cluster:       { git: "https://github.com/RiccardoGandolfi/pulp_cluster.git", rev: "d1c868789857f6e88eee19c748cf228ca61a2c7d" }
+  pulp_soc:           { git: "https://github.com/RiccardoGandolfi/pulp_soc.git", rev: 1c26fb4607a3d7b78ef793a917a1d034989dad53 }
+  pulp_cluster:       { git: "https://github.com/RiccardoGandolfi/pulp_cluster.git", rev: "aa69539b5a5118d5dc08e2fd29fc9d19ba76f9d5" }
   tbtools:            { git: "https://github.com/pulp-platform/tbtools.git", version: 0.2.1 }
 
 export_include_dirs:
