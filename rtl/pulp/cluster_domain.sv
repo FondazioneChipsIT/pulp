@@ -236,7 +236,7 @@ module cluster_domain
     HwpePresent: 1,
     HwpeCfg: '{NumHwpes: 3, HwpeList: {SOFTEX, NEUREKA, REDMULE}},
     HwpeNumPorts: 9,
-    HMRPresent: 0,
+    HMRPresent: 1,
     HMRDmrEnabled: 1,
     HMRTmrEnabled: 1,
     HMRDmrFIxed: 0,
@@ -257,8 +257,8 @@ module cluster_domain
     EnableReducedTag: 1,
     L2Size: 1000*1024,
     DmBaseAddr: 'h60203000,
-    BootRomBaseAddr: 32'h1A000000,
-    BootAddr: 32'h1C000000,
+    BootRomBaseAddr: 32'h1C008080,
+    BootAddr:  32'h1C008080,
     EnablePrivateFpu: 1,
     EnablePrivateFpDivSqrt: 0,
     NumAxiIn: NumAxiSubordinatePorts,
@@ -278,7 +278,7 @@ module cluster_domain
     ClusterPeriphOffs: ClustPeriphOffs,
     ClusterExternalOffs: ClustExtOffs,
     EnableRemapAddress: 0,
-    SnitchICache: 1,
+    SnitchICache: 0,
     default: '0
   };
    

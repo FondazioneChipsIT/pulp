@@ -5,9 +5,9 @@
 common_defs += -D FEATURE_ICACHE_STAT
 common_targs += -t cv32e40p_use_ff_regfile
 bender_defs += -D TRACE_EXECUTION
-# common_defs += -D PRIVATE_ICACHE
-# common_defs += -D HIERARCHY_ICACHE_32BIT
-# common_defs += -D ICAHE_USE_FF
+common_defs += -D PRIVATE_ICACHE
+common_defs += -D HIERARCHY_ICACHE_32BIT
+common_defs += -D ICACHE_USE_FF
 # common_defs += -D CLUSTER_ALIAS
 # common_defs += -D USE_PULP_PARAMETERS
 

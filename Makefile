@@ -173,9 +173,15 @@ test:
 sdk-gitlab:
 	sdk-releases/get-sdk-2019.11.03-CentOS_7.py; \
 
-# simplified runtime for PULP that doesn't need the sdk
+## Clone pulp-runtime as SW stack
 pulp-runtime:
-	git clone https://github.com/pulp-platform/pulp-runtime.git -b v0.0.15
+	git clone https://github.com/RiccardoGandolfi/pulp-runtime.git $@
+	cd $@; git checkout f4930d3ca496568c4f768d1d37f14e8dfd6dc9a0; cd ..
+
+## Clone regression tests for bare-metal verification
+regression-tests:
+	git clone https://github.com/RiccardoGandolfi/regression_tests.git $@
+	cd $@; git checkout 6fac940e924c7de83b37d7be14bfd9febbf04678; cd ..
 
 # the gitlab runner needs a special configuration to be able to access the
 # dependent git repositories
