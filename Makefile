@@ -142,6 +142,12 @@ import_bootcode:
 # continuous integration on jenkins
 all: checkout build install vopt sdk
 
+pulp_sdk:
+	git clone git@github.com:RiccardoGandolfi/pulp-sdk.git; \
+	cd pulp-sdk; \
+	git checkout add_iDMA_tests; \
+	git submodule update --init --recursive; \
+
 sdk:
 	if [ ! -e pulp-builder ]; then \
 	  git clone --recurse https://github.com/pulp-platform/pulp-builder.git; \
