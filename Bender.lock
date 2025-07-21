@@ -90,10 +90,10 @@ packages:
     dependencies:
     - common_cells
   cluster_icache:
-    revision: null
+    revision: 917ecbf908bdaa22c5713bbcff277d142506bb16
     version: null
     source:
-      Path: working_dir/cluster_icache
+      Git: https://github.com/pulp-platform/cluster_icache.git
     dependencies:
     - axi
     - common_cells
@@ -144,10 +144,10 @@ packages:
     dependencies:
     - common_cells
   fpnew:
-    revision: null
+    revision: a8e0cba6dd50f357ece73c2c955d96efc3c6c315
     version: null
     source:
-      Path: working_dir/fpnew
+      Git: https://github.com/openhwgroup/cvfpu.git
     dependencies:
     - common_cells
     - fpu_div_sqrt_mvp
@@ -281,10 +281,10 @@ packages:
     dependencies:
     - axi_slice
   pulp_cluster:
-    revision: null
+    revision: aa69539b5a5118d5dc08e2fd29fc9d19ba76f9d5
     version: null
     source:
-      Path: working_dir/pulp_cluster
+      Git: https://github.com/RiccardoGandolfi/pulp_cluster.git
     dependencies:
     - axi
     - axi2mem
@@ -312,10 +312,10 @@ packages:
     - tech_cells_generic
     - timer_unit
   pulp_soc:
-    revision: null
+    revision: 3d1cff929a5dab5d9a17536c48d154131f642056
     version: null
     source:
-      Path: working_dir/pulp_soc
+      Git: https://github.com/RiccardoGandolfi/pulp_soc.git
     dependencies:
     - adv_dbg_if
     - apb
@@ -386,18 +386,18 @@ packages:
     - common_cells
     - common_verification
   riscv:
-    revision: null
+    revision: c760db14dbd6cc3ec3b8ae8274df2eac7225bcac
     version: null
     source:
-      Path: working_dir/riscv
+      Git: https://github.com/AlSaqr-platform/riscv_nn.git
     dependencies:
     - fpnew
     - tech_cells_generic
   riscv-dbg:
-    revision: null
+    revision: 69be5ddc03ea1688c0eab47d6ed9d0e8725beda1
     version: null
     source:
-      Path: working_dir/riscv-dbg
+      Git: https://github.com/pulp-platform/riscv-dbg.git
     dependencies:
     - common_cells
     - tech_cells_generic
