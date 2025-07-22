@@ -312,7 +312,7 @@ packages:
     - tech_cells_generic
     - timer_unit
   pulp_soc:
-    revision: 3d1cff929a5dab5d9a17536c48d154131f642056
+    revision: a064ecc4b091b818b08795e76fef7fc826d03491
     version: null
     source:
       Git: https://github.com/RiccardoGandolfi/pulp_soc.git
