@@ -145,7 +145,7 @@ all: checkout build install vopt sdk
 pulp_sdk:
 	git clone git@github.com:RiccardoGandolfi/pulp-sdk.git; \
 	cd pulp-sdk; \
-	git checkout add_iDMA_tests; \
+	git checkout update_iDMA_drivers; \
 	git submodule update --init --recursive; \
 
 sdk:
