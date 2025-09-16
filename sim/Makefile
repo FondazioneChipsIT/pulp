@@ -14,6 +14,8 @@ VSIM_FLAGS  = -gUSE_SDVT_SPI=0 -gUSE_SDVT_CPI=0 -gBAUDRATE=115200 \
 
 SVLIB	    =  ../rtl/tb/remote_bitbang/librbs
 
+top_level ?= pulp
+
 all: clean build opt
 
 all_qone: clean build_qone opt_qone
@@ -99,3 +101,22 @@ endif
 # @touch modelsim.ini
 # @chmod +w modelsim.ini
 # rm modelsim.ini
+
+$(library):
+	$(QUESTA) vlib $(library)
+
+compile_lint: $(library)
+	qverify -od lint/comp_lint_results -c -do " \
+	onerror {exit}; \
+	do compile_lint.tcl; \
+	exit"
+lint: compile_lint
+	qverify -od lint/lint_results -c -do " \
+	lint methodology ip -goal release; \
+	lint run -d $(top_level); \
+	exit"
+
+cdc: compile_lint
+	qverify -od cdc_results -c -do " \
+	cdc run -d $(top_level); \
+	exit"

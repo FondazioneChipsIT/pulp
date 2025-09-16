@@ -12,6 +12,8 @@ export IPS_PATH=$(PULP_PATH)/fe/ips
 export RTL_PATH=$(PULP_PATH)/fe/rtl
 export TB_PATH=$(PULP_PATH)/rtl/tb
 
+ROOT_DIR = $(strip $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST)))))
+
 define declareInstallFile
 
 $(VSIM_PATH)/$(1): sim/$(1)
@@ -95,6 +97,11 @@ scripts-bender-vsim-psram: | Bender.lock
 		-t rtl -t test -t psram_vip \
 		| grep -v "set ROOT" >> $(BENDER_SIM_BUILD_DIR)/compile.tcl
 	sed -i 's/psram_fake.v/*.vp_modelsim/g' $(BENDER_SIM_BUILD_DIR)/compile.tcl # Workaround for unsupported file type in bender
+
+$(BENDER_SIM_BUILD_DIR)/compile_lint.tcl:
+	echo 'set ROOT $(ROOT_DIR)' > $(BENDER_SIM_BUILD_DIR)/compile_lint.tcl
+	./bender script vsim --vlog-arg="$(VLOG_ARGS_LINT)" $(common_defs) $(common_targs) | grep -v "set ROOT" >> $@
+	echo >> $(BENDER_SIM_BUILD_DIR)/compile_lint.tcl
 
 else
 scripts:
@@ -275,3 +282,12 @@ endif
 .PHONY: bender-rm
 bender-rm:
 	rm -f bender
+
+compile_lint:
+	$(MAKE) -C sim compile_lint
+
+lint:
+	$(MAKE) -C sim lint
+
+cdc:
+	$(MAKE) -C sim cdc
