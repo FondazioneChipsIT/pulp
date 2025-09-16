@@ -128,6 +128,13 @@ build:
 	$(MAKE) -C sim IPAPPROX=$(IPAPPROX) all
 endif
 
+## Build the RTL model for QuestaONE
+build_qone: $(BENDER_SIM_BUILD_DIR)/compile.tcl
+	@test -f Bender.lock || { echo "ERROR: Bender.lock file does not exist. Did you run make checkout in bender mode?"; exit 1; }
+	@test -f $(BENDER_SIM_BUILD_DIR)/compile.tcl || { echo "ERROR: sim/compile.tcl file does not exist. Did you run make scripts in bender mode?"; exit 1; }
+	$(MAKE) -C sim all_qone
+
+
 # sdk specific targets
 install: $(INSTALL_HEADERS)
 
