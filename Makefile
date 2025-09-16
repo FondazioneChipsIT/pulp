@@ -196,7 +196,7 @@ sdk-gitlab:
 ## Clone pulp-runtime as SW stack
 pulp-runtime:
 	git clone https://github.com/RiccardoGandolfi/pulp-runtime.git $@
-	cd $@; git checkout f4930d3ca496568c4f768d1d37f14e8dfd6dc9a0; cd ..
+	cd $@; git checkout bd049bf1787741b0f43de0b5618f6a669dbbb00b; cd ..
 
 ## Clone regression tests for bare-metal verification
 regression-tests:
