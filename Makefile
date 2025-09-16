@@ -64,6 +64,7 @@ ifndef IPAPPROX
 scripts: scripts-bender-vsim scripts-bender-fpga
 
 include bender-common.mk
+include bender-synth.mk
 
 scripts-bender-vsim: | Bender.lock
 	echo 'set ROOT [file normalize [file dirname [info script]]/..]' > $(BENDER_SIM_BUILD_DIR)/compile.tcl
@@ -100,7 +101,7 @@ scripts-bender-vsim-psram: | Bender.lock
 
 $(BENDER_SIM_BUILD_DIR)/compile_lint.tcl:
 	echo 'set ROOT $(ROOT_DIR)' > $(BENDER_SIM_BUILD_DIR)/compile_lint.tcl
-	./bender script vsim --vlog-arg="$(VLOG_ARGS_LINT)" $(common_defs) $(common_targs) | grep -v "set ROOT" >> $@
+	./bender script vsim --vlog-arg="$(VLOG_ARGS_LINT)" $(common_defs) $(common_targs) $(synth_targs) $(synth_defs) | grep -v "set ROOT" >> $@
 	echo >> $(BENDER_SIM_BUILD_DIR)/compile_lint.tcl
 
 else
