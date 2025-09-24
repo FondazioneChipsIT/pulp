@@ -118,5 +118,7 @@ lint: compile_lint
 
 cdc: compile_lint
 	qverify -od cdc_results -c -do " \
+	sdc load timing.sdc; \
+	cdc preference -multi_fanout_async; \
 	cdc run -d $(top_level); \
 	exit"
