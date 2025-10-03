@@ -231,7 +231,7 @@ module cluster_domain
     ClusterAliasBase: 'h0,
     NumSyncStages: 3,
     UseHci: 1,
-    TcdmSize: 128*1024,
+    TcdmSize: TCDM_SIZE,
     TcdmNumBank: 16,
     HwpePresent: 1,
     HwpeCfg: '{NumHwpes: 3, HwpeList: {SOFTEX, NEUREKA, REDMULE}},
