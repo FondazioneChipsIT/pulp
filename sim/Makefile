@@ -116,8 +116,14 @@ lint: compile_lint
 	lint run -d $(top_level); \
 	exit"
 
+
+# split rule in different .tcl files
+# add configure message suppress -type generic
+# sdc preference -infer_false_path_domains for false paths in sdc
+# remove multi_fanout_async for now -> until sdc is cleaned
 cdc: compile_lint
 	qverify -od cdc_results -c -do " \
+	sdc preference -sta_mode; \
 	sdc load timing.sdc; \
 	cdc preference -multi_fanout_async; \
 	cdc run -d $(top_level); \
