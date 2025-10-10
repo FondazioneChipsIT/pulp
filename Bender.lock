@@ -281,10 +281,10 @@ packages:
     dependencies:
     - axi_slice
   pulp_cluster:
-    revision: 0a8766618f7f7f301d879d196e0d68051adea6bc
+    revision: bd4adab34ab4fc12090ace792c139e94597c59af
     version: null
     source:
-      Git: https://github.com/RiccardoGandolfi/pulp_cluster.git
+      Git: git@github.com:FondazioneChipsIT/pulp_cluster.git
     dependencies:
     - axi
     - axi2mem
@@ -315,7 +315,7 @@ packages:
     revision: a064ecc4b091b818b08795e76fef7fc826d03491
     version: null
     source:
-      Git: https://github.com/RiccardoGandolfi/pulp_soc.git
+      Git: git@github.com:FondazioneChipsIT/pulp_soc.git
     dependencies:
     - adv_dbg_if
     - apb
