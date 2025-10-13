@@ -180,6 +180,14 @@ gvsoc:
 	git checkout 0470a230652d0ae6f6428c406471ff5da0dbddfb; \
 	git submodule update --init --recursive;
 
+deeploy:
+	git clone git@github.com:FondazioneChipsIT/Deeploy.git; \
+	cd Deeploy; \
+	git checkout b0e722a701c761defd0b87d60f4da536ab1887d2; \
+	git submodule update --init --recursive; \
+	pip install -e . --extra-index-url=https://pypi.ngc.nvidia.com; \
+	make minimalloc xtensor; \
+
 sdk:
 	if [ ! -e pulp-builder ]; then \
 	  git clone --recurse https://github.com/pulp-platform/pulp-builder.git; \
