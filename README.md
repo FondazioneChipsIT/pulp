@@ -196,6 +196,12 @@ To do this, the `LOAD_L2` parameter of the testbench has to be switched from
 ## PULP-SDK
 
 If you are a software developer, you can find the PULP-SDK here: https://github.com/pulp-platform/pulp-sdk.
+The PULP-SDK can also be cloned with the following:
+```
+make pulp_sdk
+```
+This will automatically point to a stable version of the SDK for the PULP-OPEN platform.
+Once in pulp-sdk refer to the related README.md.
 
 ## PULP platform structure
 After being fully setup as explained in the Getting Started section, this root
@@ -209,6 +215,15 @@ repository is structured as follows:
 - `pulp-sdk` contains the PULP software development kit; `pulp-sdk/tests`
   contains all tests released with the SDK.
 - `Bender.yml` contains all dependency and source file information for the bender tool.
+
+## GVSOC
+
+GVSOC is now to be treated as a standalone module, no longer to be used a submodule of PULP-SDK.
+It can be cloned with the following command:
+```
+make gvsoc
+```
+Once in gvsoc refer to the related README.md.
 
 ## Requirements
 The RTL platform has the following requirements:

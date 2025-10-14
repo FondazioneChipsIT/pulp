@@ -160,8 +160,13 @@ all: checkout build install vopt sdk
 pulp_sdk:
 	git clone git@github.com:FondazioneChipsIT/pulp-sdk.git; \
 	cd pulp-sdk; \
-	git checkout d210e248bc3bee55d8f05f0017538e082865e42b; \
-	git submodule update --init --recursive; \
+	git checkout ba88bcf9a98b59f5b2d7ca5714332329cc9ff1ed; \
+
+gvsoc:
+	git clone git@github.com:FondazioneChipsIT/gvsoc.git; \
+	cd gvsoc; \
+	git checkout a8c3adb0154cf7a4434404c14ed15a80082f11cd; \
+	git submodule update --init --recursive;
 
 sdk:
 	if [ ! -e pulp-builder ]; then \
