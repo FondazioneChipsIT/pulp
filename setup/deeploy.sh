@@ -7,3 +7,4 @@ export GVSOC_INSTALL_DIR=$ROOT/gvsoc/install
 export LLVM_INSTALL_DIR=/opt/llvm_toolchain/llvm
 export CMAKE=/usr/bin/cmake
 export PATH=$ROOT/../../deeploy_gcc/gcc-11.4.0/bin/:$PATH
+export PULP_OPEN_HOME=$ROOT
