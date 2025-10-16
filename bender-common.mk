@@ -11,6 +11,5 @@ common_defs += -D ICACHE_USE_FF
 common_defs += -D CLUSTER_ALIAS
 
 # common_targs += -t rtl
-# # common_targs += -t mchan
 # common_targs += -t cluster_standalone
 # common_targs += -t scm_use_fpga_scm
