@@ -13,6 +13,7 @@ export RTL_PATH=$(PULP_PATH)/fe/rtl
 export TB_PATH=$(PULP_PATH)/rtl/tb
 
 ROOT_DIR = $(strip $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST)))))
+BENDER_GIT_DIR=$(PULP_PATH)/.bender/git/checkouts
 
 define declareInstallFile
 
@@ -132,8 +133,13 @@ endif
 
 .PHONY: build
 ## Build the RTL model for vsim
+
+generate_idma_rtl:
+	@echo $(BENDER_IDMA_DIR)
+	$(MAKE) -C $(shell find $(BENDER_GIT_DIR) -type d -name 'idma*' | head -n 1) idma_hw_all
+
 ifndef IPAPPROX
-build: $(BENDER_SIM_BUILD_DIR)/compile.tcl
+build: $(BENDER_SIM_BUILD_DIR)/compile.tcl generate_idma_rtl
 	@test -f Bender.lock || { echo "ERROR: Bender.lock file does not exist. Did you run make checkout in bender mode?"; exit 1; }
 	@test -f $(BENDER_SIM_BUILD_DIR)/compile.tcl || { echo "ERROR: sim/compile.tcl file does not exist. Did you run make scripts in bender mode?"; exit 1; }
 	$(MAKE) -C sim all
