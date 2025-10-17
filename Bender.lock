@@ -299,7 +299,7 @@ packages:
     revision: a11a0406d6fa4a5a3606727ab5a0943c75e4437b
     version: null
     source:
-      Git: https://github.com/FondazioneChipsIT/iDMA.git
+      Git: https://github.com/FondazioneChipsIT/pulp_cluster.git
     dependencies:
     - axi
     - axi2mem
