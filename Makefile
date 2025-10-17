@@ -135,7 +135,6 @@ endif
 ## Build the RTL model for vsim
 
 generate_idma_rtl:
-	@echo $(BENDER_IDMA_DIR)
 	$(MAKE) -C $(shell find $(BENDER_GIT_DIR) -type d -name 'idma*' | head -n 1) idma_hw_all
 
 ifndef IPAPPROX
