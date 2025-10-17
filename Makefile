@@ -66,7 +66,7 @@ scripts: scripts-bender-vsim scripts-bender-fpga
 include bender-common.mk
 include bender-synth.mk
 
-scripts-bender-vsim_mchan: | Bender.lock
+scripts-bender-vsim-mchan: | Bender.lock
 	echo 'set ROOT [file normalize [file dirname [info script]]/..]' > $(BENDER_SIM_BUILD_DIR)/compile.tcl
 	./bender script vsim \
 		--vlog-arg="$(VLOG_ARGS)" --vcom-arg="" \
