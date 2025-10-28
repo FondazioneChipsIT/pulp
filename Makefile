@@ -170,18 +170,18 @@ import_bootcode:
 all: checkout build install vopt sdk
 
 pulp_sdk:
-	git clone git@github.com:FondazioneChipsIT/pulp-sdk.git; \
+	git clone https://github.com/FondazioneChipsIT/pulp-sdk.git; \
 	cd pulp-sdk; \
 	git checkout 2d990cd75214f88ac5a76229ebfa4fe77c1c103a; \
 
 gvsoc:
-	git clone git@github.com:FondazioneChipsIT/gvsoc.git; \
+	git clone https://github.com/FondazioneChipsIT/gvsoc.git; \
 	cd gvsoc; \
 	git checkout 0470a230652d0ae6f6428c406471ff5da0dbddfb; \
 	git submodule update --init --recursive;
 
 deeploy:
-	git clone git@github.com:FondazioneChipsIT/Deeploy.git; \
+	git clone https://github.com/FondazioneChipsIT/Deeploy.git; \
 	cd Deeploy; \
 	git checkout b0e722a701c761defd0b87d60f4da536ab1887d2; \
 	git submodule update --init --recursive; \
@@ -221,12 +221,12 @@ sdk-gitlab:
 
 ## Clone pulp-runtime as SW stack
 pulp-runtime:
-	git clone git@github.com:FondazioneChipsIT/pulp-runtime.git $@
+	git clone https://github.com/FondazioneChipsIT/pulp-runtime.git $@
 	cd $@; git checkout ab958e06b37bc05b981dabca9680f72660b8dee1; cd ..
 
 ## Clone regression tests for bare-metal verification
 regression-tests:
-	git clone git@github.com:FondazioneChipsIT/regression_tests.git $@
+	git clone https://github.com/FondazioneChipsIT/regression_tests.git $@
 	cd $@; git checkout 6fac940e924c7de83b37d7be14bfd9febbf04678; cd ..
 
 # the gitlab runner needs a special configuration to be able to access the
