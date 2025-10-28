@@ -12,6 +12,9 @@ export IPS_PATH=$(PULP_PATH)/fe/ips
 export RTL_PATH=$(PULP_PATH)/fe/rtl
 export TB_PATH=$(PULP_PATH)/rtl/tb
 
+ROOT_DIR = $(strip $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST)))))
+BENDER_GIT_DIR=$(PULP_PATH)/.bender/git/checkouts
+
 define declareInstallFile
 
 $(VSIM_PATH)/$(1): sim/$(1)
@@ -34,6 +37,8 @@ BRANCH ?= master
 VLOG_ARGS += -suppress 2583 -suppress 13314 \"+incdir+\$$ROOT/rtl/includes\"
 BENDER_SIM_BUILD_DIR = sim
 BENDER_FPGA_SCRIPTS_DIR = fpga/pulp/tcl/generated
+
+CompileFlags := +acc -permissive -suppress 2583 -suppress 13314 -suppress vlog-1952
 
 .PHONY: checkout
 ifndef IPAPPROX
@@ -59,12 +64,22 @@ clean:
 ifndef IPAPPROX
 scripts: scripts-bender-vsim scripts-bender-fpga
 
+include bender-common.mk
+include bender-synth.mk
+
+scripts-bender-vsim-mchan: | Bender.lock
+	echo 'set ROOT [file normalize [file dirname [info script]]/..]' > $(BENDER_SIM_BUILD_DIR)/compile.tcl
+	./bender script vsim \
+		--vlog-arg="$(VLOG_ARGS)" --vcom-arg="" \
+		-t rtl -t test -t pulp -t mchan $(common_defs) $(common_targs) \
+		| grep -v "set ROOT" >> $(BENDER_SIM_BUILD_DIR)/compile.tcl \
+
 scripts-bender-vsim: | Bender.lock
 	echo 'set ROOT [file normalize [file dirname [info script]]/..]' > $(BENDER_SIM_BUILD_DIR)/compile.tcl
 	./bender script vsim \
 		--vlog-arg="$(VLOG_ARGS)" --vcom-arg="" \
-		-t rtl -t test \
-		| grep -v "set ROOT" >> $(BENDER_SIM_BUILD_DIR)/compile.tcl
+		-t rtl -t test -t pulp -t idma $(common_defs) $(common_targs) \
+		| grep -v "set ROOT" >> $(BENDER_SIM_BUILD_DIR)/compile.tcl \
 
 scripts-bender-fpga: | Bender.lock
 	mkdir -p fpga/pulp/tcl/generated
@@ -92,6 +107,11 @@ scripts-bender-vsim-psram: | Bender.lock
 		| grep -v "set ROOT" >> $(BENDER_SIM_BUILD_DIR)/compile.tcl
 	sed -i 's/psram_fake.v/*.vp_modelsim/g' $(BENDER_SIM_BUILD_DIR)/compile.tcl # Workaround for unsupported file type in bender
 
+$(BENDER_SIM_BUILD_DIR)/compile_lint.tcl:
+	echo 'set ROOT $(ROOT_DIR)' > $(BENDER_SIM_BUILD_DIR)/compile_lint.tcl
+	./bender script vsim --vlog-arg="$(VLOG_ARGS_LINT)" $(common_defs) $(common_targs) $(synth_targs) $(synth_defs) | grep -v "set ROOT" >> $@
+	echo >> $(BENDER_SIM_BUILD_DIR)/compile_lint.tcl
+
 else
 scripts:
 	./generate-scripts
@@ -113,8 +133,12 @@ endif
 
 .PHONY: build
 ## Build the RTL model for vsim
+
+generate_idma_rtl:
+	$(MAKE) -C $(shell find $(BENDER_GIT_DIR) -type d -name 'idma*' | head -n 1) idma_hw_all
+
 ifndef IPAPPROX
-build: $(BENDER_SIM_BUILD_DIR)/compile.tcl
+build: $(BENDER_SIM_BUILD_DIR)/compile.tcl generate_idma_rtl
 	@test -f Bender.lock || { echo "ERROR: Bender.lock file does not exist. Did you run make checkout in bender mode?"; exit 1; }
 	@test -f $(BENDER_SIM_BUILD_DIR)/compile.tcl || { echo "ERROR: sim/compile.tcl file does not exist. Did you run make scripts in bender mode?"; exit 1; }
 	$(MAKE) -C sim all
@@ -123,6 +147,13 @@ build:
 	@[ "$$(ls -A ips/)" ] || { echo "ERROR: ips/ is an empty directory. Did you run ./update-ips?"; exit 1; }
 	$(MAKE) -C sim IPAPPROX=$(IPAPPROX) all
 endif
+
+## Build the RTL model for QuestaONE
+build_qone: $(BENDER_SIM_BUILD_DIR)/compile.tcl
+	@test -f Bender.lock || { echo "ERROR: Bender.lock file does not exist. Did you run make checkout in bender mode?"; exit 1; }
+	@test -f $(BENDER_SIM_BUILD_DIR)/compile.tcl || { echo "ERROR: sim/compile.tcl file does not exist. Did you run make scripts in bender mode?"; exit 1; }
+	$(MAKE) -C sim all_qone
+
 
 # sdk specific targets
 install: $(INSTALL_HEADERS)
@@ -137,6 +168,17 @@ import_bootcode:
 # JENKIN CI
 # continuous integration on jenkins
 all: checkout build install vopt sdk
+
+pulp_sdk:
+	git clone git@github.com:FondazioneChipsIT/pulp-sdk.git; \
+	cd pulp-sdk; \
+	git checkout c9a2a6662650f0f53dfde809ccbcd1ea269b08b3; \
+
+gvsoc:
+	git clone git@github.com:FondazioneChipsIT/gvsoc.git; \
+	cd gvsoc; \
+	git checkout 0470a230652d0ae6f6428c406471ff5da0dbddfb; \
+	git submodule update --init --recursive;
 
 sdk:
 	if [ ! -e pulp-builder ]; then \
@@ -169,9 +211,15 @@ test:
 sdk-gitlab:
 	sdk-releases/get-sdk-2019.11.03-CentOS_7.py; \
 
-# simplified runtime for PULP that doesn't need the sdk
+## Clone pulp-runtime as SW stack
 pulp-runtime:
-	git clone https://github.com/pulp-platform/pulp-runtime.git -b v0.0.15
+	git clone git@github.com:FondazioneChipsIT/pulp-runtime.git $@
+	cd $@; git checkout ab958e06b37bc05b981dabca9680f72660b8dee1; cd ..
+
+## Clone regression tests for bare-metal verification
+regression-tests:
+	git clone git@github.com:FondazioneChipsIT/regression_tests.git $@
+	cd $@; git checkout 6fac940e924c7de83b37d7be14bfd9febbf04678; cd ..
 
 # the gitlab runner needs a special configuration to be able to access the
 # dependent git repositories
@@ -252,3 +300,12 @@ endif
 .PHONY: bender-rm
 bender-rm:
 	rm -f bender
+
+compile_lint:
+	$(MAKE) -C sim compile_lint
+
+lint:
+	$(MAKE) -C sim lint
+
+cdc:
+	$(MAKE) -C sim cdc

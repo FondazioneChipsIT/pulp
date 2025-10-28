@@ -92,7 +92,7 @@
 `define NB_CORES      8
 `define NB_DMAS       4
 `define NB_MPERIPHS   1
-`define NB_SPERIPHS   10
+`define NB_SPERIPHS   12
 //`define REMAP_ADDRESS
 
 `define GPIO_NUM     64 
@@ -100,8 +100,6 @@
 
 // DEFINES
 `define MPER_EXT_ID   0
-
-
 
 `define RVT 0
 `define LVT 1
