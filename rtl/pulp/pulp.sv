@@ -1160,7 +1160,7 @@ cluster_domain#(
         .NB_CORES            (`NB_CORES),
         .NB_HWPE_PORTS       (4),
         .NB_DMAS             (4),
-        .TCDM_SIZE           (64*1024),
+        .TCDM_SIZE           (256*1024),
         .NB_TCDM_BANKS       (16),
         .L2_SIZE             (512*1024),
   // ICACHE PARAMETERS
