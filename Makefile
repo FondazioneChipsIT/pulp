@@ -192,7 +192,7 @@ gvsoc:
 	git submodule update --init --recursive;
 
 deeploy:
-	git clone git@github.com:FondazioneChipsIT/Deeploy.git; \
+	git clone https://github.com/FondazioneChipsIT/Deeploy.git; \
 	cd Deeploy; \
 	git checkout 43c3335732db2c59bc7148a22ca16a02365a188e; \
 	git submodule update --init --recursive; \
@@ -233,7 +233,7 @@ sdk-gitlab:
 ## Clone pulp-runtime as SW stack
 pulp-runtime:
 	git clone https://github.com/FondazioneChipsIT/pulp-runtime.git $@
-	cd $@; git checkout ad6690b0f03e8f8559606cc907125914de4b0873; cd ..
+	cd $@; git checkout ab958e06b37bc05b981dabca9680f72660b8dee1; cd ..
 
 ## Clone regression tests for bare-metal verification
 regression-tests:
