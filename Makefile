@@ -172,7 +172,7 @@ all: checkout build install vopt sdk
 pulp_sdk:
 	git clone https://github.com/FondazioneChipsIT/pulp-sdk.git; \
 	cd pulp-sdk; \
-	git checkout 2d990cd75214f88ac5a76229ebfa4fe77c1c103a; \
+	git checkout 4ca8b3f6ace9309f3c2f143c806702ce2969bcdb; \
 
 gvsoc:
 	git clone https://github.com/FondazioneChipsIT/gvsoc.git; \
@@ -183,7 +183,7 @@ gvsoc:
 deeploy:
 	git clone https://github.com/FondazioneChipsIT/Deeploy.git; \
 	cd Deeploy; \
-	git checkout b0e722a701c761defd0b87d60f4da536ab1887d2; \
+	git checkout d7b8ee1f83069f3de87fd9f652f9a4d0353e6a0f; \
 	git submodule update --init --recursive; \
 	pip install -e . --extra-index-url=https://pypi.ngc.nvidia.com; \
 	make minimalloc xtensor; \
