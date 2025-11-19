@@ -32,9 +32,6 @@
 `define USE_L2_MULTIBANK
 `define NB_L2_CHANNELS 4
 
-// JTAG
-`define DMI_JTAG_IDCODE 32'h249511C3
-
 // Hardware Accelerator selection
 `define HWCRYPT
 
@@ -51,10 +48,35 @@
 // remember to change the defines in the pulp.h as well to be coherent with this approach
 //`define DEM_PER_BEFORE_TCDM_TS
 
+// Default JTAG ID code type
+typedef struct packed {
+  bit [ 3:0]  version;
+  bit [15:0]  part_num;
+  bit [10:0]  manufacturer;
+  bit         _one;
+} jtag_idcode_t;
+
+// PULP Platform manufacturer and default PulpOpen part number
+localparam bit [10:0] JtagPulpManufacturer  = 11'h6d9;
+localparam bit [15:0] JtagPulpOpenPartNum   = 16'hc5e5;
+localparam bit [ 3:0] JtagPulpOpenVersion   = 4'h1;
+localparam jtag_idcode_t PulpOpenIdCode = '{
+  _one          : 1,
+  manufacturer  : JtagPulpManufacturer,
+  part_num      : JtagPulpOpenPartNum,
+  version       : JtagPulpOpenVersion
+};
+
+// JTAG
+`define DMI_JTAG_IDCODE PulpOpenIdCode
+// `define DMI_JTAG_IDCODE 32'h249511C3
+
 
 
 // uncomment if FPGA emulator
+// `ifdef TARGET_FPGA
 // `define PULP_FPGA_EMUL 1
+// `endif
 // uncomment if using Vivado for ulpcluster synthesis
 `define VIVADO
 
