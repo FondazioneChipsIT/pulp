@@ -14,6 +14,7 @@ export TB_PATH=$(PULP_PATH)/rtl/tb
 
 ROOT_DIR = $(strip $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST)))))
 BENDER_GIT_DIR=$(PULP_PATH)/.bender/git/checkouts
+BENDER_BIN := $(shell which bender)
 
 define declareInstallFile
 
@@ -299,11 +300,7 @@ test-local-runtime:
 	cd tests && ../pulp-runtime/scripts/bwruntests.py --proc-verbose -v --report-junit -t 600 --yaml -o simplified-runtime.xml runtime-tests.yaml
 
 bender:
-ifeq (,$(wildcard ./bender))
-	curl --proto '=https' --tlsv1.2 -sSf https://pulp-platform.github.io/bender/init \
-		| bash -s -- 0.25.2
-	touch bender
-endif
+	ln -sf $(BENDER_BIN) bender
 
 .PHONY: bender-rm
 bender-rm:
