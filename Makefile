@@ -14,6 +14,7 @@ export TB_PATH=$(PULP_PATH)/rtl/tb
 
 ROOT_DIR = $(strip $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST)))))
 BENDER_GIT_DIR=$(PULP_PATH)/.bender/git/checkouts
+BENDER_BIN := $(shell which bender)
 
 define declareInstallFile
 
@@ -149,7 +150,7 @@ build:
 endif
 
 ## Build the RTL model for QuestaONE
-build_qone: $(BENDER_SIM_BUILD_DIR)/compile.tcl
+build_qone: $(BENDER_SIM_BUILD_DIR)/compile.tcl generate_idma_rtl
 	@test -f Bender.lock || { echo "ERROR: Bender.lock file does not exist. Did you run make checkout in bender mode?"; exit 1; }
 	@test -f $(BENDER_SIM_BUILD_DIR)/compile.tcl || { echo "ERROR: sim/compile.tcl file does not exist. Did you run make scripts in bender mode?"; exit 1; }
 	$(MAKE) -C sim all_qone
@@ -170,15 +171,23 @@ import_bootcode:
 all: checkout build install vopt sdk
 
 pulp_sdk:
-	git clone git@github.com:FondazioneChipsIT/pulp-sdk.git; \
+	git clone https://github.com/FondazioneChipsIT/pulp-sdk.git; \
 	cd pulp-sdk; \
-	git checkout c9a2a6662650f0f53dfde809ccbcd1ea269b08b3; \
+	git checkout 4ca8b3f6ace9309f3c2f143c806702ce2969bcdb; \
 
 gvsoc:
-	git clone git@github.com:FondazioneChipsIT/gvsoc.git; \
+	git clone https://github.com/FondazioneChipsIT/gvsoc.git; \
 	cd gvsoc; \
 	git checkout 0470a230652d0ae6f6428c406471ff5da0dbddfb; \
 	git submodule update --init --recursive;
+
+deeploy:
+	git clone https://github.com/FondazioneChipsIT/Deeploy.git; \
+	cd Deeploy; \
+	git checkout 9ef6c9458d8c2f80930ae011cbbb4dba4377deba; \
+	git submodule update --init --recursive; \
+	pip install -e . --extra-index-url=https://pypi.ngc.nvidia.com; \
+	make minimalloc xtensor; \
 
 sdk:
 	if [ ! -e pulp-builder ]; then \
@@ -213,12 +222,12 @@ sdk-gitlab:
 
 ## Clone pulp-runtime as SW stack
 pulp-runtime:
-	git clone git@github.com:FondazioneChipsIT/pulp-runtime.git $@
-	cd $@; git checkout ab958e06b37bc05b981dabca9680f72660b8dee1; cd ..
+	git clone https://github.com/FondazioneChipsIT/pulp-runtime.git $@
+	cd $@; git checkout ad6690b0f03e8f8559606cc907125914de4b0873; cd ..
 
 ## Clone regression tests for bare-metal verification
 regression-tests:
-	git clone git@github.com:FondazioneChipsIT/regression_tests.git $@
+	git clone https://github.com/FondazioneChipsIT/regression_tests.git $@
 	cd $@; git checkout 6fac940e924c7de83b37d7be14bfd9febbf04678; cd ..
 
 # the gitlab runner needs a special configuration to be able to access the
@@ -291,11 +300,7 @@ test-local-runtime:
 	cd tests && ../pulp-runtime/scripts/bwruntests.py --proc-verbose -v --report-junit -t 600 --yaml -o simplified-runtime.xml runtime-tests.yaml
 
 bender:
-ifeq (,$(wildcard ./bender))
-	curl --proto '=https' --tlsv1.2 -sSf https://pulp-platform.github.io/bender/init \
-		| bash -s -- 0.25.2
-	touch bender
-endif
+	ln -sf $(BENDER_BIN) bender
 
 .PHONY: bender-rm
 bender-rm:

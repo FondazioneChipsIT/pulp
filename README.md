@@ -223,7 +223,27 @@ It can be cloned with the following command:
 ```
 make gvsoc
 ```
+Build with the following (once you are inside the gvsoc dir):
+```
+source sourceme.sh
+make build TARGETS=pulp-open
+```
 Once in gvsoc refer to the related README.md.
+
+## DEEPLOY
+
+Deeploy can now be cloned and used inside the pulp top directory.
+The following command clones deeploy, updates its submodules and clones the main dependencies needed for execution on the pulp-open platform. 
+```
+make deeploy
+```
+After having cloned Deeploy and its dependencies, do the following: 
+```
+source setup/deeploy.sh
+```
+This script will set the needed environment variables for Deeploy execution. **IMPORTANT**: this version takes for granted that the llvm toolchain is installed in `/opt/llvm_toolchain`. Also, the strongly suggested gcc versions to be used are `gcc 11.4.0` or `gcc 11.5.0`.
+Once these are done and a configuration has been selected in the sdk, you can refer to the README inside Deeploy for launching tests on the pulp-open platform: both gvsoc and rtl platforms are now supported. They are to be selected inside the individual python testrunners inside Deeploy.
+
 
 ## Requirements
 The RTL platform has the following requirements:

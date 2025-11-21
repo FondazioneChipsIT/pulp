@@ -4,6 +4,7 @@ mkfile_path := $(dir $(abspath $(firstword $(MAKEFILE_LIST))))
 
 QOPT ?= qopt
 QSIM ?= qsim
+Q1VE ?= q1ve --qverify
 
 VOPT				?= vopt
 VSIM				?= vsim
@@ -106,12 +107,12 @@ $(library):
 	$(QUESTA) vlib $(library)
 
 compile_lint: $(library)
-	qverify -od lint/comp_lint_results -c -do " \
+	$(Q1VE) -od lint/comp_lint_results -c -do " \
 	onerror {exit}; \
 	do compile_lint.tcl; \
 	exit"
 lint: compile_lint
-	qverify -od lint/lint_results -c -do " \
+	$(Q1VE) -od lint/lint_results -c -do " \
 	lint methodology ip -goal release; \
 	lint run -d $(top_level); \
 	exit"
@@ -122,7 +123,7 @@ lint: compile_lint
 # sdc preference -infer_false_path_domains for false paths in sdc
 # remove multi_fanout_async for now -> until sdc is cleaned
 cdc: compile_lint
-	qverify -od cdc_results -c -do " \
+	$(Q1VE) -od cdc_results -c -do " \
 	sdc preference -sta_mode; \
 	sdc load timing.sdc; \
 	cdc preference -multi_fanout_async; \
