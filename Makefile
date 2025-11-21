@@ -150,7 +150,7 @@ build:
 endif
 
 ## Build the RTL model for QuestaONE
-build_qone: $(BENDER_SIM_BUILD_DIR)/compile.tcl
+build_qone: $(BENDER_SIM_BUILD_DIR)/compile.tcl generate_idma_rtl
 	@test -f Bender.lock || { echo "ERROR: Bender.lock file does not exist. Did you run make checkout in bender mode?"; exit 1; }
 	@test -f $(BENDER_SIM_BUILD_DIR)/compile.tcl || { echo "ERROR: sim/compile.tcl file does not exist. Did you run make scripts in bender mode?"; exit 1; }
 	$(MAKE) -C sim all_qone
@@ -223,7 +223,7 @@ sdk-gitlab:
 ## Clone pulp-runtime as SW stack
 pulp-runtime:
 	git clone https://github.com/FondazioneChipsIT/pulp-runtime.git $@
-	cd $@; git checkout ab958e06b37bc05b981dabca9680f72660b8dee1; cd ..
+	cd $@; git checkout 541e1cc03bad826de12a97c785076e985867870f; cd ..
 
 ## Clone regression tests for bare-metal verification
 regression-tests:
