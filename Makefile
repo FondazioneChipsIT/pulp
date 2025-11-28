@@ -178,7 +178,7 @@ pulp_sdk:
 gvsoc:
 	git clone https://github.com/FondazioneChipsIT/gvsoc.git; \
 	cd gvsoc; \
-	git checkout 0470a230652d0ae6f6428c406471ff5da0dbddfb; \
+	git checkout 9fef561c2277957b64999e75327cc7567eed6e72; \
 	git submodule update --init --recursive;
 
 deeploy:
