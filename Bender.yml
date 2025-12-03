@@ -14,7 +14,7 @@ dependencies:
   tech_cells_generic: { git: "https://github.com/pulp-platform/tech_cells_generic.git", version: 0.2.6 }
   jtag_pulp:          { git: "https://github.com/pulp-platform/jtag_pulp.git", version: 0.2.0 }
   pulp_soc:           { git: "git@github.com:FondazioneChipsIT/pulp_soc.git", rev: "09f10d847b68c667953f50b57e58be3aa63ba0ac" }
-  pulp_cluster:       { git: "git@github.com:FondazioneChipsIT/pulp_cluster.git", rev: "a11a0406d6fa4a5a3606727ab5a0943c75e4437b" }
+  pulp_cluster:       { git: "git@github.com:FondazioneChipsIT/pulp_cluster.git", rev: "53d6c16d97f766f18c6e9334cbcabf3ad9c30212" }
   tbtools:            { git: "https://github.com/pulp-platform/tbtools.git", version: 0.2.1 }
 
 export_include_dirs:
