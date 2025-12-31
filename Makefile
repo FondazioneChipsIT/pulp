@@ -138,6 +138,8 @@ endif
 generate_idma_rtl:
 	$(MAKE) -C $(shell find $(BENDER_GIT_DIR) -type d -name 'idma*' | head -n 1) idma_hw_all
 
+init: checkout generate_idma_rtl
+
 ifndef IPAPPROX
 build: $(BENDER_SIM_BUILD_DIR)/compile.tcl generate_idma_rtl
 	@test -f Bender.lock || { echo "ERROR: Bender.lock file does not exist. Did you run make checkout in bender mode?"; exit 1; }
@@ -178,13 +180,13 @@ pulp_sdk:
 gvsoc:
 	git clone https://github.com/FondazioneChipsIT/gvsoc.git; \
 	cd gvsoc; \
-	git checkout 0470a230652d0ae6f6428c406471ff5da0dbddfb; \
+	git checkout 71d31e53e36baf6b85a02349f1402b99ef71482c; \
 	git submodule update --init --recursive;
 
 deeploy:
 	git clone https://github.com/FondazioneChipsIT/Deeploy.git; \
 	cd Deeploy; \
-	git checkout 9ef6c9458d8c2f80930ae011cbbb4dba4377deba; \
+	git checkout 38314815dea4fd287fe55497b7157d7ec65bcc7b; \
 	git submodule update --init --recursive; \
 	pip install -e . --extra-index-url=https://pypi.ngc.nvidia.com; \
 	make minimalloc xtensor; \
