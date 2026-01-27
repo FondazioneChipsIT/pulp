@@ -186,7 +186,7 @@ gvsoc:
 deeploy:
 	git clone https://github.com/FondazioneChipsIT/Deeploy.git; \
 	cd Deeploy; \
-	git checkout 38314815dea4fd287fe55497b7157d7ec65bcc7b; \
+	git checkout 325249fe41b8425c1e451e07e9b5135cd90df87b; \
 	git submodule update --init --recursive; \
 	pip install -e . --extra-index-url=https://pypi.ngc.nvidia.com; \
 	make minimalloc xtensor; \
