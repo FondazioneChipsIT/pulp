@@ -138,10 +138,10 @@ endif
 generate_idma_rtl:
 	$(MAKE) -C $(shell find $(BENDER_GIT_DIR) -type d -name 'idma*' | head -n 1) idma_hw_all
 
-init: checkout generate_idma_rtl
+init: checkout
 
 ifndef IPAPPROX
-build: $(BENDER_SIM_BUILD_DIR)/compile.tcl generate_idma_rtl
+build: $(BENDER_SIM_BUILD_DIR)/compile.tcl
 	@test -f Bender.lock || { echo "ERROR: Bender.lock file does not exist. Did you run make checkout in bender mode?"; exit 1; }
 	@test -f $(BENDER_SIM_BUILD_DIR)/compile.tcl || { echo "ERROR: sim/compile.tcl file does not exist. Did you run make scripts in bender mode?"; exit 1; }
 	$(MAKE) -C sim all
@@ -152,7 +152,7 @@ build:
 endif
 
 ## Build the RTL model for QuestaONE
-build_qone: $(BENDER_SIM_BUILD_DIR)/compile.tcl generate_idma_rtl
+build_qone: $(BENDER_SIM_BUILD_DIR)/compile.tcl
 	@test -f Bender.lock || { echo "ERROR: Bender.lock file does not exist. Did you run make checkout in bender mode?"; exit 1; }
 	@test -f $(BENDER_SIM_BUILD_DIR)/compile.tcl || { echo "ERROR: sim/compile.tcl file does not exist. Did you run make scripts in bender mode?"; exit 1; }
 	$(MAKE) -C sim all_qone
