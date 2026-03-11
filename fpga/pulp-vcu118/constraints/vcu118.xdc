@@ -25,6 +25,10 @@ create_clock -period 100.000 -name tck -waveform {0.000 50.000} [get_ports pad_j
 set_input_jitter tck 1.000
 set_property CLOCK_DEDICATED_ROUTE FALSE [get_nets pad_jtag_tck_IBUF_inst/O]
 
+# vio
+# set_false_path -from [get_pins i_vio/inst/PROBE_OUT_ALL_INST/G_PROBE_OUT[0].PROBE_OUT0_INST/Probe_out_reg[0]/C] -to [get_pins i_pulp/soc_domain_i/pulp_soc_i/soc_peripherals_i/i_udma/i_hyper/udma_hyperbus_i/ddr_clk/r_clk90_o_reg/CLR]
+# set_false_path -from [get_pins i_vio/inst/PROBE_OUT_ALL_INST/G_PROBE_OUT[0].PROBE_OUT0_INST/Probe_out_reg[0]/C] -to [get_pins i_pulp/soc_domain_i/pulp_soc_i/l2_ram_i/CUTS[0].bank_i/gen_1_ports.i_xpm_memory_spram/xpm_memory_base_inst/gen_wr_a.gen_byte_narrow.for_mem_cols[1].mem_reg_3_bram_1/ENARDEN]
+# set_false_path -from [get_pins i_vio/inst/PROBE_OUT_ALL_INST/G_PROBE_OUT[0].PROBE_OUT0_INST/Probe_out_reg[0]/C] -to [get_pins i_pulp/cluster_domain_i/cluster_i/tcdm_banks_i/banks_gen[12].gen_standard_banks.i_bank/gen_1_ports.i_xpm_memory_spram/xpm_memory_base_inst/gen_wr_a.gen_byte_narrow.for_mem_cols[1].mem_reg_uram_0/EN_A]
 
 # minimize routing delay
 set_input_delay -clock tck -clock_fall 5.000 [get_ports pad_jtag_tdi]
@@ -148,11 +152,11 @@ set_property -dict {PACKAGE_PIN L19 IOSTANDARD LVCMOS12} [get_ports pad_reset]
 ######################################################################
 # JTAG mapping (OK)
 ######################################################################
-set_property -dict {PACKAGE_PIN AY14 IOSTANDARD LVCMOS18} [get_ports pad_jtag_tms]
-set_property -dict {PACKAGE_PIN AY15 IOSTANDARD LVCMOS18} [get_ports pad_jtag_tdi]
-set_property -dict {PACKAGE_PIN AW15 IOSTANDARD LVCMOS18} [get_ports pad_jtag_tdo]
-set_property -dict {PACKAGE_PIN AV15 IOSTANDARD LVCMOS18} [get_ports pad_jtag_tck]
-set_property -dict {PACKAGE_PIN AV16 IOSTANDARD LVCMOS18} [get_ports pad_jtag_trst]
+set_property -dict {PACKAGE_PIN N28 IOSTANDARD LVCMOS12} [get_ports pad_jtag_tms]
+set_property -dict {PACKAGE_PIN M30 IOSTANDARD LVCMOS12} [get_ports pad_jtag_tdi]
+set_property -dict {PACKAGE_PIN N30 IOSTANDARD LVCMOS12} [get_ports pad_jtag_tdo]
+set_property -dict {PACKAGE_PIN P30 IOSTANDARD LVCMOS12} [get_ports pad_jtag_tck]
+set_property -dict {PACKAGE_PIN P29 IOSTANDARD LVCMOS12} [get_ports pad_jtag_trst]
 
 
 #set_property -dict {PACKAGE_PIN AV16 IOSTANDARD LVCMOS18} [get_ports pad_pmod0_4]
@@ -223,17 +227,17 @@ set_property -dict "PACKAGE_PIN BC11 IOSTANDARD LVCMOS18"   [get_ports FMC_qspi_
 # SDIO mapping (TO CHECK)
 ######################################################################
 # PULP pad_sdio_sdio0 - FPGA N28 - ZCU102 GPIO PMOD HEADER J53.1
-set_property -dict "PACKAGE_PIN N28 IOSTANDARD LVCMOS18"  [get_ports FMC_sdio_data0]
+set_property -dict "PACKAGE_PIN AY14 IOSTANDARD LVCMOS18"  [get_ports FMC_sdio_data0]
 # PULP pad_sdio_sdio1 - FPGA M30 - ZCU102 GPIO PMOD HEADER J53.3
-set_property -dict "PACKAGE_PIN M30 IOSTANDARD LVCMOS18"  [get_ports FMC_sdio_data1]
+set_property -dict "PACKAGE_PIN AY15 IOSTANDARD LVCMOS18"  [get_ports FMC_sdio_data1]
 # PULP pad_sdio_sdio2 - FPGA N30 - ZCU102 GPIO PMOD HEADER J53.5
-set_property -dict "PACKAGE_PIN N30 IOSTANDARD LVCMOS18"  [get_ports FMC_sdio_data2]
+set_property -dict "PACKAGE_PIN AW15 IOSTANDARD LVCMOS18"  [get_ports FMC_sdio_data2]
 # PULP pad_sdio_sdio3 - FPGA P30 - ZCU102 GPIO PMOD HEADER J53.7
-set_property -dict "PACKAGE_PIN P30 IOSTANDARD LVCMOS18"  [get_ports FMC_sdio_data3]
+set_property -dict "PACKAGE_PIN AV15 IOSTANDARD LVCMOS18"  [get_ports FMC_sdio_data3]
 # PULP pad_sdio_cmd - FPGA P29 - ZCU102 GPIO PMOD HEADER J53.2
-set_property -dict "PACKAGE_PIN P29 IOSTANDARD LVCMOS18"  [get_ports FMC_sdio_cmd]
+set_property -dict "PACKAGE_PIN AV16 IOSTANDARD LVCMOS18"  [get_ports FMC_sdio_cmd]
 # PULP pad_sdio_sck - FPGA L31 - ZCU102 GPIO PMOD HEADER J53.4
-set_property -dict "PACKAGE_PIN L31 IOSTANDARD LVCMOS18"  [get_ports FMC_sdio_sck]
+set_property -dict "PACKAGE_PIN AU16 IOSTANDARD LVCMOS18"  [get_ports FMC_sdio_sck]
 
 ######################################################################
 # I2S master mapping (OK)

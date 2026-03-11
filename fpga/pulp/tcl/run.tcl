@@ -34,6 +34,8 @@ add_files -norecurse ../pulp-$BOARD/rtl/xilinx_pulp.v
 # Add Xilinx IPs
 read_ip $FPGA_IPS/xilinx_clk_mngr/xilinx_clk_mngr.srcs/sources_1/ip/xilinx_clk_mngr/xilinx_clk_mngr.xci
 read_ip $FPGA_IPS/xilinx_slow_clk_mngr/xilinx_slow_clk_mngr.srcs/sources_1/ip/xilinx_slow_clk_mngr/xilinx_slow_clk_mngr.xci
+read_ip $FPGA_IPS/vio/xilinx_vio.srcs/sources_1/ip/xilinx_vio/xilinx_vio.xci
+read_ip $FPGA_IPS/xilinx_clk_wiz/xlnx_clk_wiz.srcs/sources_1/ip/xlnx_clk_wiz/xlnx_clk_wiz.xci
 
 # set pulp as top
 set_property top xilinx_pulp [current_fileset]; #

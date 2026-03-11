@@ -74,9 +74,9 @@ localparam jtag_idcode_t PulpOpenIdCode = '{
 
 
 // uncomment if FPGA emulator
-// `ifdef TARGET_FPGA
-// `define PULP_FPGA_EMUL 1
-// `endif
+`ifdef TARGET_FPGA
+`define PULP_FPGA_EMUL 1
+`endif
 // uncomment if using Vivado for ulpcluster synthesis
 `define VIVADO
 
