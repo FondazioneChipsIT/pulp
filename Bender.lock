@@ -180,10 +180,10 @@ packages:
       Git: https://github.com/pulp-platform/generic_FLL.git
     dependencies: []
   hci:
-    revision: f7fbfcd3bf4a4c27b03119381329aec0716d2a8a
+    revision: 362be08237fb64feeb12b1c7adc1d322b5373a3a
     version: null
     source:
-      Git: https://github.com/pulp-platform/hci.git
+      Git: https://github.com/FondazioneChipsIT/hci.git
     dependencies:
     - cluster_interconnect
     - common_cells
@@ -192,10 +192,10 @@ packages:
     - redundancy_cells
     - register_interface
   hier-icache:
-    revision: 7243834d2407ca23cff583d57641c84b982bd9bc
-    version: 1.3.0
+    revision: 0d0faeaf19b97a8f9a88cb8eba4db4703b0002ed
+    version: null
     source:
-      Git: https://github.com/pulp-platform/hier-icache.git
+      Git: https://github.com/FondazioneChipsIT/hier-icache.git
     dependencies:
     - axi
     - axi_slice
@@ -296,10 +296,10 @@ packages:
     dependencies:
     - axi_slice
   pulp_cluster:
-    revision: 9efd1834e50549f09e8b25d2cc31bb0e738d7d87
+    revision: 4f80e8862d69525892946ef65458fb65e23c44f6
     version: null
     source:
-      Git: https://github.com/FondazioneChipsIT/pulp_cluster.git
+      Git: git@github.com:FondazioneChipsIT/pulp_cluster.git
     dependencies:
     - axi
     - axi2mem
