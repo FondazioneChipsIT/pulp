@@ -6,9 +6,14 @@ set CONSTRS constraints
 set FPGA_RTL rtl
 set FPGA_IPS ips
 
+
+# It fixes the long delays during update_compile_order step
+set_param project.hsv.draftModeDefault only
+
 # create project
 create_project $PROJECT . -force -part $::env(XILINX_PART)
 set_property board_part $XILINX_BOARD [current_project]
+set_property XPM_LIBRARIES XPM_MEMORY [current_project]
 
 # Add sources
 source tcl/add_sources.tcl
@@ -45,8 +50,6 @@ update_compile_order -fileset sources_1
 
 # Add constraints
 add_files -fileset constrs_1 -norecurse ../pulp-$BOARD/$CONSTRS/$BOARD.xdc
-
-auto_detect_xpm
 
 # Elaborate design
 synth_design -rtl -name rtl_1 -gated_clock_conversion on -sfcu;# sfcu -> run synthesis in single file compilation unit mode
