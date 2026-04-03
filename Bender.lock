@@ -330,7 +330,7 @@ packages:
     revision: 09f10d847b68c667953f50b57e58be3aa63ba0ac
     version: null
     source:
-      Git: git@github.com:FondazioneChipsIT/pulp_soc.git
+      Git: https://github.com/FondazioneChipsIT/pulp_soc.git
     dependencies:
     - adv_dbg_if
     - apb
