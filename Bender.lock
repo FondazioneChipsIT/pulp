@@ -1,6 +1,6 @@
 packages:
   adv_dbg_if:
-    revision: 19eeef8cae1cbec7413877b3f29fe0bd078748d7
+    revision: c4d7aa177ef96b0fdff8748f81bd15489446c95a
     version: 0.0.2
     source:
       Git: https://github.com/pulp-platform/adv_dbg_if.git
@@ -327,7 +327,7 @@ packages:
     - tech_cells_generic
     - timer_unit
   pulp_soc:
-    revision: 09f10d847b68c667953f50b57e58be3aa63ba0ac
+    revision: a6967f9d654f1754e0564f9947e3a88409747ab7
     version: null
     source:
       Git: https://github.com/FondazioneChipsIT/pulp_soc.git
