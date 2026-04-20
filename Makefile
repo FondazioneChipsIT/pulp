@@ -52,7 +52,6 @@ else
 checkout:
 	./update-ips
 endif
-	$(MAKE) scripts
 
 # generic clean and build targets for the platform
 .PHONY: clean
@@ -138,7 +137,7 @@ endif
 generate_idma_rtl:
 	$(MAKE) -C $(shell find $(BENDER_GIT_DIR) -type d -name 'idma*' | head -n 1) idma_hw_all
 
-init: checkout generate_idma_rtl
+init: checkout generate_idma_rtl scripts-bender-vsim
 
 ifndef IPAPPROX
 build: $(BENDER_SIM_BUILD_DIR)/compile.tcl generate_idma_rtl
