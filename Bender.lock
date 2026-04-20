@@ -296,8 +296,8 @@ packages:
     dependencies:
     - axi_slice
   pulp_cluster:
-    revision: 4ca1653a56d56e3e7b5c6469eb7e5f706271b92a
-    version: 0.0.0
+    revision: 3856719aee82c4c36430e6bf400fe101395f87cb
+    version: null
     source:
       Git: https://github.com/FondazioneChipsIT/pulp_cluster.git
     dependencies:
