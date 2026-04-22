@@ -16,3 +16,41 @@
 /sim/transcript
 /sim/work
 /working_dir
+
+# logs
+*.log
+*.db
+*.bin
+.qsim
+sim/**/*.txt
+
+# External SDKs / tools checked out locally
+/Deeploy/
+/gvsoc/
+/pulp-sdk/
+
+# Simulation outputs
+/sim/stdout/
+/sim/vectors/
+/sim/*.vstf
+
+# Waveform / EDA artifacts
+*.vcd
+*.fst
+*.wdb
+*.jou
+*.str
+
+# Python
+*.pyc
+*.egg-info/
+
+# Editor / OS
+.DS_Store
+*.swp
+*~
+
+# other tools
+.vscode
+.claude
+

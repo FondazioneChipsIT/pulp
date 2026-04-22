@@ -47,7 +47,9 @@ Bender.lock: bender
 	./bender checkout
 	touch Bender.lock
 
-checkout: bender Bender.lock
+checkout: bender
+	./bender checkout
+	touch Bender.lock
 else
 checkout:
 	./update-ips
@@ -246,7 +248,7 @@ test-fast-regressions:
 	source pulp-runtime/configs/pulp.sh; \
 	cd regression_tests && ../pulp-runtime/scripts/bwruntests.py --proc-verbose -v --report-junit -t 2000 --yaml -o simplified-runtime.xml simple-regression-tests.yaml
 
-test-local-regressions: 
+test-local-regressions:
 	mkdir -p regression_tests/riscv_tests_soc
 	cp -r regression_tests/riscv_tests/* regression_tests/riscv_tests_soc
 	source setup/vsim.sh; \
@@ -295,7 +297,7 @@ git-boot:
 	touch regression_tests/boot-runtime.xml; \
 	cd regression_tests && ../pulp-runtime/scripts/bwruntests.py --proc-verbose -v --report-junit -t 7200 --yaml -o boot-runtime.xml hello-test.yaml
 
-test-local-runtime: 
+test-local-runtime:
 	source setup/vsim.sh; \
 	source pulp-runtime/configs/pulp.sh; \
 	cd tests && ../pulp-runtime/scripts/bwruntests.py --proc-verbose -v --report-junit -t 600 --yaml -o simplified-runtime.xml runtime-tests.yaml
