@@ -41,6 +41,8 @@ BENDER_FPGA_SCRIPTS_DIR = fpga/pulp/tcl/generated
 
 CompileFlags := +acc -permissive -suppress 2583 -suppress 13314 -suppress vlog-1952
 
+VENV := venv
+
 .PHONY: checkout
 ifndef IPAPPROX
 Bender.lock: bender
@@ -133,11 +135,16 @@ else
 	./generate-scripts --psram-vip
 endif
 
+venv:
+	python3 -m venv $(VENV) && \
+	$(VENV)/bin/python -m pip install -U pip && \
+	$(VENV)/bin/python -m pip install -r $(shell bender path idma)/requirements.txt
+
+generate_idma_rtl: venv
+	. "$(VENV)/bin/activate" && $(MAKE) -C $(shell bender path idma) idma_hw_all
+
 .PHONY: build
 ## Build the RTL model for vsim
-
-generate_idma_rtl:
-	$(MAKE) -C $(shell find $(BENDER_GIT_DIR) -type d -name 'idma*' | head -n 1) idma_hw_all
 
 init: checkout generate_idma_rtl scripts-bender-vsim
 
