@@ -1,6 +1,6 @@
 packages:
   adv_dbg_if:
-    revision: 19eeef8cae1cbec7413877b3f29fe0bd078748d7
+    revision: c4d7aa177ef96b0fdff8748f81bd15489446c95a
     version: 0.0.2
     source:
       Git: https://github.com/pulp-platform/adv_dbg_if.git
@@ -108,7 +108,7 @@ packages:
     dependencies:
     - common_cells
   cluster_peripherals:
-    revision: e464eb9ddcc39e5a50009819601c4f213b1d4ba3
+    revision: 6e55d0a74ff33ce9aac9fcd44ad702f323ace644
     version: 2.2.0
     source:
       Git: https://github.com/pulp-platform/cluster_peripherals.git
@@ -296,8 +296,8 @@ packages:
     dependencies:
     - axi_slice
   pulp_cluster:
-    revision: 4ca1653a56d56e3e7b5c6469eb7e5f706271b92a
-    version: 0.0.0
+    revision: 3856719aee82c4c36430e6bf400fe101395f87cb
+    version: null
     source:
       Git: https://github.com/FondazioneChipsIT/pulp_cluster.git
     dependencies:
@@ -327,10 +327,10 @@ packages:
     - tech_cells_generic
     - timer_unit
   pulp_soc:
-    revision: 09f10d847b68c667953f50b57e58be3aa63ba0ac
+    revision: a6967f9d654f1754e0564f9947e3a88409747ab7
     version: null
     source:
-      Git: git@github.com:FondazioneChipsIT/pulp_soc.git
+      Git: https://github.com/FondazioneChipsIT/pulp_soc.git
     dependencies:
     - adv_dbg_if
     - apb

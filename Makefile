@@ -41,18 +41,21 @@ BENDER_FPGA_SCRIPTS_DIR = fpga/pulp/tcl/generated
 
 CompileFlags := +acc -permissive -suppress 2583 -suppress 13314 -suppress vlog-1952
 
+VENV := venv
+
 .PHONY: checkout
 ifndef IPAPPROX
 Bender.lock: bender
 	./bender checkout
 	touch Bender.lock
 
-checkout: bender Bender.lock
+checkout: bender
+	./bender checkout
+	touch Bender.lock
 else
 checkout:
 	./update-ips
 endif
-	$(MAKE) scripts
 
 # generic clean and build targets for the platform
 .PHONY: clean
@@ -132,13 +135,18 @@ else
 	./generate-scripts --psram-vip
 endif
 
+venv:
+	python3 -m venv $(VENV) && \
+	$(VENV)/bin/python -m pip install -U pip && \
+	$(VENV)/bin/python -m pip install -r $(shell bender path idma)/requirements.txt
+
+generate_idma_rtl: venv
+	. "$(VENV)/bin/activate" && $(MAKE) -C $(shell bender path idma) idma_hw_all
+
 .PHONY: build
 ## Build the RTL model for vsim
 
-generate_idma_rtl:
-	$(MAKE) -C $(shell find $(BENDER_GIT_DIR) -type d -name 'idma*' | head -n 1) idma_hw_all
-
-init: checkout generate_idma_rtl
+init: checkout generate_idma_rtl scripts-bender-vsim
 
 ifndef IPAPPROX
 build: $(BENDER_SIM_BUILD_DIR)/compile.tcl generate_idma_rtl
@@ -175,7 +183,7 @@ all: checkout build install vopt sdk
 pulp_sdk:
 	git clone https://github.com/FondazioneChipsIT/pulp-sdk.git; \
 	cd pulp-sdk; \
-	git checkout 4ca8b3f6ace9309f3c2f143c806702ce2969bcdb; \
+	git checkout 663640b3c5ca8f6d63d633a8dd52f4d8e30db3bb; \
 
 gvsoc:
 	git clone https://github.com/FondazioneChipsIT/gvsoc.git; \
@@ -247,7 +255,7 @@ test-fast-regressions:
 	source pulp-runtime/configs/pulp.sh; \
 	cd regression_tests && ../pulp-runtime/scripts/bwruntests.py --proc-verbose -v --report-junit -t 2000 --yaml -o simplified-runtime.xml simple-regression-tests.yaml
 
-test-local-regressions: 
+test-local-regressions:
 	mkdir -p regression_tests/riscv_tests_soc
 	cp -r regression_tests/riscv_tests/* regression_tests/riscv_tests_soc
 	source setup/vsim.sh; \
@@ -296,7 +304,7 @@ git-boot:
 	touch regression_tests/boot-runtime.xml; \
 	cd regression_tests && ../pulp-runtime/scripts/bwruntests.py --proc-verbose -v --report-junit -t 7200 --yaml -o boot-runtime.xml hello-test.yaml
 
-test-local-runtime: 
+test-local-runtime:
 	source setup/vsim.sh; \
 	source pulp-runtime/configs/pulp.sh; \
 	cd tests && ../pulp-runtime/scripts/bwruntests.py --proc-verbose -v --report-junit -t 600 --yaml -o simplified-runtime.xml runtime-tests.yaml
