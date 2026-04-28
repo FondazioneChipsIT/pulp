@@ -180,6 +180,14 @@ import_bootcode:
 # continuous integration on jenkins
 all: checkout build install vopt sdk
 
+## Clone fault injection scripts
+FAULT_SIM_REMOTE ?= https://github.com/pulp-platform/InjectaFault.git
+FAULT_SIM_COMMIT ?= 84ddcff # branch: rt/rename-var
+
+fault_injection_sim:
+	git clone $(FAULT_SIM_REMOTE) sim/$@
+	cd $@ && git checkout $(FAULT_SIM_COMMIT)
+
 pulp_sdk:
 	git clone https://github.com/FondazioneChipsIT/pulp-sdk.git; \
 	cd pulp-sdk; \
