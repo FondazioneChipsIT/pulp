@@ -183,7 +183,7 @@ all: checkout build install vopt sdk
 pulp_sdk:
 	git clone https://github.com/FondazioneChipsIT/pulp-sdk.git; \
 	cd pulp-sdk; \
-	git checkout 663640b3c5ca8f6d63d633a8dd52f4d8e30db3bb; \
+	git checkout bdd7408bed50b39dabdd455d1cc06ce3989d577b; \
 
 gvsoc:
 	git clone https://github.com/FondazioneChipsIT/gvsoc.git; \
