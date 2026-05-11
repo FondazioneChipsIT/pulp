@@ -140,8 +140,8 @@ venv:
 	$(VENV)/bin/python -m pip install -U pip && \
 	$(VENV)/bin/python -m pip install -r $(shell bender path idma)/requirements.txt
 
-generate_idma_rtl: venv
-	. "$(VENV)/bin/activate" && $(MAKE) -C $(shell bender path idma) idma_hw_all
+# generate_idma_rtl: venv
+# 	. "$(VENV)/bin/activate" && $(MAKE) -C $(shell bender path idma) idma_hw_all
 
 .PHONY: build
 ## Build the RTL model for vsim
@@ -153,7 +153,7 @@ init: checkout generate_idma_rtl scripts-bender-vsim
 init-fpga: checkout generate_idma_rtl scripts-bender-fpga
 
 ifndef IPAPPROX
-build: $(BENDER_SIM_BUILD_DIR)/compile.tcl generate_idma_rtl
+build: $(BENDER_SIM_BUILD_DIR)/compile.tcl
 	@test -f Bender.lock || { echo "ERROR: Bender.lock file does not exist. Did you run make checkout in bender mode?"; exit 1; }
 	@test -f $(BENDER_SIM_BUILD_DIR)/compile.tcl || { echo "ERROR: sim/compile.tcl file does not exist. Did you run make scripts in bender mode?"; exit 1; }
 	$(MAKE) -C sim all
@@ -164,7 +164,7 @@ build:
 endif
 
 ## Build the RTL model for QuestaONE
-build_qone: $(BENDER_SIM_BUILD_DIR)/compile.tcl generate_idma_rtl
+build_qone: $(BENDER_SIM_BUILD_DIR)/compile.tcl
 	@test -f Bender.lock || { echo "ERROR: Bender.lock file does not exist. Did you run make checkout in bender mode?"; exit 1; }
 	@test -f $(BENDER_SIM_BUILD_DIR)/compile.tcl || { echo "ERROR: sim/compile.tcl file does not exist. Did you run make scripts in bender mode?"; exit 1; }
 	$(MAKE) -C sim all_qone
