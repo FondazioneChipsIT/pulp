@@ -88,6 +88,7 @@ scripts-bender-vsim: | Bender.lock
 scripts-bender-fpga: | Bender.lock
 	mkdir -p fpga/pulp/tcl/generated
 	./bender script vivado -t fpga -t idma -t rtl $(common_defs) $(common_targs) -t xilinx > $(BENDER_FPGA_SCRIPTS_DIR)/compile.tcl
+	sed -i '/TRACE_EXECUTION/d' $(BENDER_FPGA_SCRIPTS_DIR)/compile.tcl
 
 $(BENDER_SIM_BUILD_DIR)/compile.tcl: Bender.lock
 	echo 'set ROOT [file normalize [file dirname [info script]]/..]' > $(BENDER_SIM_BUILD_DIR)/compile.tcl
