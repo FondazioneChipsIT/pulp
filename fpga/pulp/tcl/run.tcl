@@ -18,13 +18,6 @@ set_property XPM_LIBRARIES XPM_MEMORY [current_project]
 # Add sources
 source tcl/add_sources.tcl
 
-# Set Verilog Defines.
-set DEFINES "FPGA_TARGET_XILINX=1 TARGET_FPGA=1 TARGET_XILINX=1 PULP_FPGA_EMUL=1 AXI4_XCHECK_OFF=1"
-if { $BOARD == "zcu102" } {
-    set DEFINES "$DEFINES zcu102=1"
-}
-set_property verilog_define $DEFINES [current_fileset]
-
 # detect target clock
 if [info exists ::env(FC_CLK_PERIOD_NS)] {
     set FC_CLK_PERIOD_NS $::env(FC_CLK_PERIOD_NS)
