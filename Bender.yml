@@ -10,7 +10,7 @@ package:
     - "Francesco Conti <f.conti@unibo.it>"
 
 dependencies:
-  common_cells:       { git: "https://github.com/pulp-platform/common_cells.git", version: =1.22.1 }
+  common_cells:       { git: "https://github.com/FondazioneChipsIT/common_cells.git", rev: 362ccb9662b245085d3d486c4ecd5b4f10519113 } #rg/vcs_fix
   tech_cells_generic: { git: "https://github.com/pulp-platform/tech_cells_generic.git", version: =0.2.6 }
   jtag_pulp:          { git: "https://github.com/pulp-platform/jtag_pulp.git", version: =0.2.0 }
   pulp_soc:           { git: "git@github.com:FondazioneChipsIT/pulp_soc.git", rev: "a6967f9d654f1754e0564f9947e3a88409747ab7" }
