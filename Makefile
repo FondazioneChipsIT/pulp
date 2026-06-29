@@ -39,7 +39,7 @@ VLOG_ARGS += -suppress 2583 -suppress 13314 \"+incdir+\$$ROOT/rtl/includes\"
 BENDER_SIM_BUILD_DIR = sim
 BENDER_FPGA_SCRIPTS_DIR = fpga/pulp/tcl/generated
 
-VLOGAN_ARGS ?= -nc -assert svaext +v2k -ntb_opts uvm -timescale=1ns/1ps +incdir+${VCS_UVM_HOME}/src ${VCS_UVM_HOME}/src/uvm_pkg.sv \"+incdir+\$$ROOT/rtl/includes\"
+VLOGAN_ARGS ?= -nc -assert svaext +v2k -kdb -ntb_opts uvm -timescale=1ns/1ps +incdir+${VCS_UVM_HOME}/src ${VCS_UVM_HOME}/src/uvm_pkg.sv \"+incdir+\$$ROOT/rtl/includes\"
 
 CompileFlags := +acc -permissive -suppress 2583 -suppress 13314 -suppress vlog-1952
 
