@@ -39,7 +39,7 @@ VLOG_ARGS += -suppress 2583 -suppress 13314 \"+incdir+\$$ROOT/rtl/includes\"
 BENDER_SIM_BUILD_DIR = sim
 BENDER_FPGA_SCRIPTS_DIR = fpga/pulp/tcl/generated
 
-VLOGAN_ARGS ?= -nc -assert svaext +v2k -ntb_opts uvm -timescale=1ns/1ps +incdir+${VCS_HOME}/etc/uvm-1.2 \"+incdir+\$$ROOT/rtl/includes\"
+VLOGAN_ARGS ?= -nc -assert svaext +v2k -ntb_opts uvm -timescale=1ns/1ps +incdir+${VCS_UVM_HOME}/src ${VCS_UVM_HOME}/src/uvm_pkg.sv \"+incdir+\$$ROOT/rtl/includes\"
 
 CompileFlags := +acc -permissive -suppress 2583 -suppress 13314 -suppress vlog-1952
 
@@ -88,9 +88,8 @@ scripts-bender-vsim: | Bender.lock
 		| grep -v "set ROOT" >> $(BENDER_SIM_BUILD_DIR)/compile.tcl \
 
 scripts-bender-vcs: | Bender.lock
-	rm $(BENDER_SIM_BUILD_DIR)/compile_vcs.sh && \
 	./bender script vcs --vlogan-args="$(VLOGAN_ARGS)" --vcom-arg="-full64 -kdb" -t rtl -t simulation -t pulp -t idma \
-	-t cv32e40p_include_tracer $(common_defs) $(common_targs) >> $(BENDER_SIM_BUILD_DIR)/compile_vcs.sh
+	-t cv32e40p_include_tracer $(common_defs) $(common_targs) > $(BENDER_SIM_BUILD_DIR)/compile_vcs.sh
 	chmod +x $(BENDER_SIM_BUILD_DIR)/compile_vcs.sh
 
 scripts-bender-fpga: | Bender.lock
@@ -167,8 +166,8 @@ build: $(BENDER_SIM_BUILD_DIR)/compile.tcl generate_idma_rtl
 build_vcs:
 	./$(BENDER_SIM_BUILD_DIR)/compile_vcs.sh
 
-elab_vcs:
-	./elab_vcs.sh
+# elab_vcs:
+# 	source elab_vcs.sh
 
 else
 build:

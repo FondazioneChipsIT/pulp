@@ -268,7 +268,7 @@ package jtag_pkg;
          ref logic s_tms,
          ref logic s_trstn,
          ref logic s_tdi,
-         ref logic s_tdo
+         input logic s_tdo
       );
          s_trstn = 1'b1;
          s_tms   = 1'b0;
@@ -340,7 +340,7 @@ package jtag_pkg;
          ref logic s_tms,
          ref logic s_trstn,
          ref logic s_tdi,
-         ref logic s_tdo
+         input logic s_tdo
       );
          this.jtag_goto_SHIFT_DR(s_tck, s_tms, s_trstn, s_tdi);
          this.jtag_shift_NBITS_SHIFT_DR(size, datain, dataout, s_tck, s_tms, s_trstn, s_tdi, s_tdo);
@@ -354,7 +354,7 @@ package jtag_pkg;
       ref logic s_tms,
       ref logic s_trstn,
       ref logic s_tdi,
-      ref logic s_tdo
+      input logic s_tdo
    );
       automatic JTAG_reg #(.size(JTAG_IDCODE_WIDTH+1), .instr({JTAG_SOC_IDCODE, JTAG_SOC_BYPASS})) jtag_idcode = new;
       //as we have two tap in Daisy Chain, always one bit more for the bypass
@@ -374,7 +374,7 @@ package jtag_pkg;
       ref logic s_tms,
       ref logic s_trstn,
       ref logic s_tdi,
-      ref logic s_tdo
+      input logic s_tdo
    );
       automatic JTAG_reg #(.size(255), .instr({JTAG_SOC_BYPASS, JTAG_SOC_BYPASS})) jtag_bypass = new;
                 logic [255:0] result_data;

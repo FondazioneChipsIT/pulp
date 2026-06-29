@@ -234,7 +234,7 @@ module cluster_domain
     TcdmSize: TCDM_SIZE,
     TcdmNumBank: 16,
     HwpePresent: 1,
-    HwpeCfg: '{NumHwpes: 3, HwpeList: {SOFTEX, NEUREKA, REDMULE}},
+    HwpeCfg: '{NumHwpes: 2, HwpeList: {NEUREKA, REDMULE}},
     HwpeNumPorts: 9,
     HMRPresent: 1,
     HMRDmrEnabled: 1,
