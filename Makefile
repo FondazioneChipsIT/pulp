@@ -85,6 +85,11 @@ scripts-bender-vsim: | Bender.lock
 		-t rtl -t test -t pulp -t idma $(common_defs) $(common_targs) \
 		| grep -v "set ROOT" >> $(BENDER_SIM_BUILD_DIR)/compile.tcl \
 
+scripts-bender-fpga-mchan: | Bender.lock
+	mkdir -p fpga/pulp/tcl/generated
+	./bender script vivado -t fpga -t mchan -t rtl $(fpga_defs) $(common_defs) $(common_targs) -t xilinx > $(BENDER_FPGA_SCRIPTS_DIR)/compile.tcl
+	sed -i '/TRACE_EXECUTION/d' $(BENDER_FPGA_SCRIPTS_DIR)/compile.tcl
+
 scripts-bender-fpga: | Bender.lock
 	mkdir -p fpga/pulp/tcl/generated
 	./bender script vivado -t fpga -t idma -t rtl $(fpga_defs) $(common_defs) $(common_targs) -t xilinx > $(BENDER_FPGA_SCRIPTS_DIR)/compile.tcl
