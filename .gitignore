@@ -28,6 +28,7 @@ sim/**/*.txt
 /Deeploy/
 /gvsoc/
 /pulp-sdk/
+/pulp-builder/
 
 # Simulation outputs
 /sim/stdout/
@@ -44,6 +45,8 @@ sim/**/*.txt
 # Python
 *.pyc
 *.egg-info/
+# venv created by generate_idma_rtl to run the iDMA RTL generator
+/venv/
 
 # Editor / OS
 .DS_Store
