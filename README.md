@@ -106,10 +106,24 @@ source setup/vsim.sh
 
 make checkout
 
-make scripts
+make generate_idma_rtl
 
+make scripts-bender-vsim
+```
+
+or alternatively: 
+```
+make init
+```
+which does all of the above. Then, to build the RTL platform for QuestaSim:
+```
 make build
 ```
+To build the RTL platform for QuestaOne:
+```
+make build_qone
+```
+
 **NOTE:** An error might occur running the scripts (*Failed to spawn child process.Too many open files (os error 24).*) while a fix is WIP a workaround is to increase the number of processes avilable to your machine by setting for example ulimit to 4096 (ulimit -n 4096).
 
 This command builds a version of the simulation platform with no dependencies on
