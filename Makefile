@@ -185,11 +185,19 @@ pulp_sdk:
 	cd pulp-sdk; \
 	git checkout bdd7408bed50b39dabdd455d1cc06ce3989d577b; \
 
+# GVSoC is cloned from upstream. The changes this platform needs live on a branch of the
+# gvsoc-pulp submodule, hosted on the same upstream remote: the Deeploy cluster memory
+# sizes and the iDMA model of the cluster DMA.
+GVSOC_URL ?= https://github.com/gvsoc/gvsoc.git
+GVSOC_PULP_BRANCH ?= lz/pulp_open_idma3d
+
 gvsoc:
-	git clone https://github.com/FondazioneChipsIT/gvsoc.git; \
+	git clone $(GVSOC_URL); \
 	cd gvsoc; \
-	git checkout 71d31e53e36baf6b85a02349f1402b99ef71482c; \
-	git submodule update --init --recursive;
+	git submodule update --init --recursive; \
+	cd pulp; \
+	git fetch origin; \
+	git checkout -B $(GVSOC_PULP_BRANCH) origin/$(GVSOC_PULP_BRANCH);
 
 deeploy:
 	git clone https://github.com/FondazioneChipsIT/Deeploy.git; \
