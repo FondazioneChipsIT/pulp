@@ -324,3 +324,14 @@ lint:
 
 cdc:
 	$(MAKE) -C sim cdc
+
+PULP_NONFREE_REMOTE ?= git@gitlab.chips.it:digitalresearchline/chips-restricted/pulp-nonfree.git
+PULP_NONFREE_DIR	?= $(ROOT_DIR)/nonfree
+PULP_NONFREE_COMMIT ?= 5fd5c6edf419216b85436da9647a0204f486ff75
+
+pulp_nonfree_init:
+	git clone $(PULP_NONFREE_REMOTE) $(PULP_NONFREE_DIR)
+	cd $(PULP_NONFREE_DIR) && git checkout $(PULP_NONFREE_COMMIT)
+
+pulp_nonfree_clean:
+	rm -rf $(PULP_NONFREE_DIR)
