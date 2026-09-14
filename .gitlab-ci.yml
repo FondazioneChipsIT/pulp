@@ -226,7 +226,7 @@ init:
   stage: nonfree
   script: make pulp_nonfree_init
   artifacts:
-    paths: [ nonfree/.gitlab-ci.yml ]
+    paths: [ nonfree/.gitlab-ci_new.yml ]
 
 subpipe:
   stage: nonfree
@@ -235,6 +235,6 @@ subpipe:
     PARENT_PIPELINE_SOURCE: $CI_PIPELINE_SOURCE
   trigger:
     include:
-      - artifact: nonfree/.gitlab-ci.yml
+      - artifact: nonfree/.gitlab-ci_new.yml
         job: init
     strategy: depend
