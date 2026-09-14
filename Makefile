@@ -180,22 +180,31 @@ import_bootcode:
 # continuous integration on jenkins
 all: checkout build install vopt sdk
 
+PULP_SDK_REMOTE := https://github.com/FondazioneChipsIT/pulp-sdk.git
+PULP_SDK_COMMIT := 82d85db0bec94944aa7bdf6a9f22a2c7e6b014ca
+
 pulp_sdk:
-	git clone https://github.com/FondazioneChipsIT/pulp-sdk.git; \
+	git clone ${PULP_SDK_REMOTE}; \
 	cd pulp-sdk; \
-	git checkout 362d4d3df37e245455b33790b71f01ecf2261261; \
+	git checkout ${PULP_SDK_COMMIT}; \
 	git submodule update --init --recursive;
+
+GVSOC_REMOTE := https://github.com/FondazioneChipsIT/gvsoc.git
+GVSOC_COMMIT := 71d31e53e36baf6b85a02349f1402b99ef71482c
 
 gvsoc:
-	git clone https://github.com/FondazioneChipsIT/gvsoc.git; \
+	git clone ${GVSOC_REMOTE}; \
 	cd gvsoc; \
-	git checkout 71d31e53e36baf6b85a02349f1402b99ef71482c; \
+	git checkout ${GVSOC_COMMIT}; \
 	git submodule update --init --recursive;
 
+DEEPLOY_REMOTE := https://github.com/FondazioneChipsIT/Deeploy.git
+DEEPLOY_COMMIT := 43c3335732db2c59bc7148a22ca16a02365a188e
+
 deeploy:
-	git clone https://github.com/FondazioneChipsIT/Deeploy.git; \
+	git clone ${DEEPLOY_REMOTE}; \
 	cd Deeploy; \
-	git checkout 43c3335732db2c59bc7148a22ca16a02365a188e; \
+	git checkout ${DEEPLOY_COMMIT}; \
 	git submodule update --init --recursive; \
 	pip install -e . --extra-index-url=https://pypi.ngc.nvidia.com; \
 	make minimalloc xtensor; \
