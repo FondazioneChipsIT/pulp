@@ -146,8 +146,8 @@ venv:
 	$(VENV)/bin/python -m pip install -U pip && \
 	$(VENV)/bin/python -m pip install -r $(shell bender path idma)/requirements.txt
 
-# generate_idma_rtl: venv
-# 	. "$(VENV)/bin/activate" && $(MAKE) -C $(shell bender path idma) idma_hw_all
+generate_idma_rtl: venv
+	. "$(VENV)/bin/activate" && $(MAKE) -C $(shell bender path idma) idma_hw_all
 
 .PHONY: build
 ## Build the RTL model for vsim
