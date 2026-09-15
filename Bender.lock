@@ -299,7 +299,7 @@ packages:
     revision: 23cf745df8c86b92ae9171e68de85e074e49dc8b
     version: null
     source:
-      Git: git@github.com:FondazioneChipsIT/pulp_cluster.git
+      Git: https://github.com/FondazioneChipsIT/pulp_cluster.git
     dependencies:
     - axi
     - axi2mem
