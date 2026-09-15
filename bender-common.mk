@@ -9,6 +9,7 @@ common_defs += -D PRIVATE_ICACHE
 common_defs += -D HIERARCHY_ICACHE_32BIT
 common_defs += -D ICACHE_USE_FF
 common_defs += -D CLUSTER_ALIAS
+fpga_defs += -D PULP_FPGA_EMUL
 
 # common_targs += -t rtl
 # common_targs += -t cluster_standalone
