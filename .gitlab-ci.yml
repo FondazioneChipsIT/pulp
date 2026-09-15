@@ -12,6 +12,41 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+stages:
+  - nonfree
+  - PULP_CI
+
+init:
+  stage: nonfree
+  script: make pulp_nonfree_init
+  artifacts:
+    paths:
+      - nonfree/.gitlab-ci.yml
+      - nonfree/.gitlab-ci_fpga.yml
+
+subpipe_rtl:
+  stage: PULP_CI
+  needs: [ init ]
+  variables:
+    PARENT_PIPELINE_SOURCE: $CI_PIPELINE_SOURCE
+  trigger:
+    include:
+      - artifact: nonfree/.gitlab-ci.yml
+        job: init
+    strategy: depend
+
+subpipe_fpga:
+  stage: PULP_CI
+  needs: [ init ]
+  variables:
+    PARENT_PIPELINE_SOURCE: $CI_PIPELINE_SOURCE
+  trigger:
+    include:
+      - artifact: nonfree/.gitlab-ci_fpga.yml
+        job: init
+    strategy: depend
+
+
 
 # variables:
 #   PATH: "/home/gitlabci/bin:/usr/lib64/qt-3.3/bin:/bin:/usr/bin:/usr/local/bin:/sbin:/usr/sbin:/usr/local/sbin:/usr/local/condor/bin:/usr/sepp/bin:/usr/local/anaconda3/bin:/var/lib/snapd/snap/bin"
@@ -173,19 +208,6 @@
 #     reports:
 #       junit: regression_tests/simplified-psram-runtime.xml
 
-# build_fpga:
-#   stage: build_fpga
-#   before_script:
-#     - echo "Generate scripts for FPGA"
-#     - make scripts
-#   script:
-#     - echo "Building for zcu102"
-#     - make -C fpga zcu102 VIVADO='vivado-2019.1.1 vivado'
-#   artifacts:
-#     name: "$CI_JOB_NAME-$CI_COMMIT_REF_NAME-$CI_COMMIT_SHORT_SHA"
-#     paths:
-#       - fpga/*
-
 # sim_questa_multivers:
 #   stage: sim_questa_multivers
 #   allow_failure: true
@@ -218,23 +240,3 @@
 #     - fetch_std
 #   needs:
 #     - fetch_std
-
-stages:
-  - nonfree
-
-init:
-  stage: nonfree
-  script: make pulp_nonfree_init
-  artifacts:
-    paths: [ nonfree/.gitlab-ci.yml ]
-
-subpipe:
-  stage: nonfree
-  needs: [ init ]
-  variables:
-    PARENT_PIPELINE_SOURCE: $CI_PIPELINE_SOURCE
-  trigger:
-    include:
-      - artifact: nonfree/.gitlab-ci.yml
-        job: init
-    strategy: depend

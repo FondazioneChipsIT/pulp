@@ -146,7 +146,11 @@ generate_idma_rtl: venv
 .PHONY: build
 ## Build the RTL model for vsim
 
+# Init rules: choose to initialize the repo for RTL or FPGA
+
 init: checkout generate_idma_rtl scripts-bender-vsim
+
+init-fpga: checkout generate_idma_rtl scripts-bender-fpga
 
 ifndef IPAPPROX
 build: $(BENDER_SIM_BUILD_DIR)/compile.tcl generate_idma_rtl
@@ -328,7 +332,7 @@ cdc:
 
 PULP_NONFREE_REMOTE ?= git@gitlab.chips.it:digitalresearchline/chips-restricted/pulp-nonfree.git
 PULP_NONFREE_DIR	?= $(ROOT_DIR)/nonfree
-PULP_NONFREE_COMMIT ?= 20084d7ccfa29e9c4cfeef7e6964a411ffad4407
+PULP_NONFREE_COMMIT ?= 9432c228962bc62196fa7e669553743a2ceba54a
 
 pulp_nonfree_init:
 	git clone $(PULP_NONFREE_REMOTE) $(PULP_NONFREE_DIR)
