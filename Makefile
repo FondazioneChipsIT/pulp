@@ -141,12 +141,12 @@ else
 	./generate-scripts --psram-vip
 endif
 
-venv:
+idma_venv:
 	python3 -m venv $(VENV) && \
 	$(VENV)/bin/python -m pip install -U pip && \
 	$(VENV)/bin/python -m pip install -r $(shell bender path idma)/requirements.txt
 
-generate_idma_rtl: venv
+generate_idma_rtl: idma_venv
 	. "$(VENV)/bin/activate" && $(MAKE) -C $(shell bender path idma) idma_hw_all
 
 .PHONY: build
@@ -202,6 +202,15 @@ pulp_sdk:
 GVSOC_URL ?= https://github.com/gvsoc/gvsoc.git
 GVSOC_PULP_BRANCH ?= lz/pulp_open_idma3d
 
+gvsoc_venv:
+	rm -rf $(VENV) && \
+	python3 -m venv $(VENV) && \
+	$(VENV)/bin/python -m pip install -U pip && \
+	$(VENV)/bin/python -m pip install -r gvsoc/requirements.txt && \
+	$(VENV)/bin/python -m pip install -r gvsoc/gvrun/requirements.txt && \
+    $(VENV)/bin/python -m pip install -r gvsoc/config_tree/requirements.txt && \
+    $(VENV)/bin/python -m pip install -r gvsoc/core/requirements.txt
+
 gvsoc:
 	git clone $(GVSOC_URL); \
 	cd gvsoc; \
@@ -209,6 +218,11 @@ gvsoc:
 	cd pulp; \
 	git fetch origin; \
 	git checkout -B $(GVSOC_PULP_BRANCH) origin/$(GVSOC_PULP_BRANCH);
+
+build_gvsoc: gvsoc gvsoc_venv
+	. "$(VENV)/bin/activate"; \
+	cd gvsoc && source sourceme.sh; \
+	$(MAKE) clean build TARGETS=pulp-open
 
 deeploy:
 	git clone https://github.com/FondazioneChipsIT/Deeploy.git; \
