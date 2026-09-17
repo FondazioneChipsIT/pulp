@@ -85,9 +85,15 @@ scripts-bender-vsim: | Bender.lock
 		-t rtl -t test -t pulp -t idma $(common_defs) $(common_targs) \
 		| grep -v "set ROOT" >> $(BENDER_SIM_BUILD_DIR)/compile.tcl \
 
+scripts-bender-fpga-mchan: | Bender.lock
+	mkdir -p fpga/pulp/tcl/generated
+	./bender script vivado -t fpga -t mchan -t rtl $(fpga_defs) $(common_defs) $(common_targs) -t xilinx > $(BENDER_FPGA_SCRIPTS_DIR)/compile.tcl
+	sed -i '/TRACE_EXECUTION/d' $(BENDER_FPGA_SCRIPTS_DIR)/compile.tcl
+
 scripts-bender-fpga: | Bender.lock
 	mkdir -p fpga/pulp/tcl/generated
-	./bender script vivado -t fpga -t xilinx > $(BENDER_FPGA_SCRIPTS_DIR)/compile.tcl
+	./bender script vivado -t fpga -t idma -t rtl $(fpga_defs) $(common_defs) $(common_targs) -t xilinx > $(BENDER_FPGA_SCRIPTS_DIR)/compile.tcl
+	sed -i '/TRACE_EXECUTION/d' $(BENDER_FPGA_SCRIPTS_DIR)/compile.tcl
 
 $(BENDER_SIM_BUILD_DIR)/compile.tcl: Bender.lock
 	echo 'set ROOT [file normalize [file dirname [info script]]/..]' > $(BENDER_SIM_BUILD_DIR)/compile.tcl
@@ -146,10 +152,14 @@ generate_idma_rtl: venv
 .PHONY: build
 ## Build the RTL model for vsim
 
+# Init rules: choose to initialize the repo for RTL or FPGA
+
 init: checkout generate_idma_rtl scripts-bender-vsim
 
+init-fpga: checkout generate_idma_rtl scripts-bender-fpga
+
 ifndef IPAPPROX
-build: $(BENDER_SIM_BUILD_DIR)/compile.tcl generate_idma_rtl
+build: $(BENDER_SIM_BUILD_DIR)/compile.tcl
 	@test -f Bender.lock || { echo "ERROR: Bender.lock file does not exist. Did you run make checkout in bender mode?"; exit 1; }
 	@test -f $(BENDER_SIM_BUILD_DIR)/compile.tcl || { echo "ERROR: sim/compile.tcl file does not exist. Did you run make scripts in bender mode?"; exit 1; }
 	$(MAKE) -C sim all
@@ -160,7 +170,7 @@ build:
 endif
 
 ## Build the RTL model for QuestaONE
-build_qone: $(BENDER_SIM_BUILD_DIR)/compile.tcl generate_idma_rtl
+build_qone: $(BENDER_SIM_BUILD_DIR)/compile.tcl
 	@test -f Bender.lock || { echo "ERROR: Bender.lock file does not exist. Did you run make checkout in bender mode?"; exit 1; }
 	@test -f $(BENDER_SIM_BUILD_DIR)/compile.tcl || { echo "ERROR: sim/compile.tcl file does not exist. Did you run make scripts in bender mode?"; exit 1; }
 	$(MAKE) -C sim all_qone
@@ -183,7 +193,8 @@ all: checkout build install vopt sdk
 pulp_sdk:
 	git clone https://github.com/FondazioneChipsIT/pulp-sdk.git; \
 	cd pulp-sdk; \
-	git checkout bdd7408bed50b39dabdd455d1cc06ce3989d577b; \
+	git checkout 362d4d3df37e245455b33790b71f01ecf2261261; \
+	git submodule update --init --recursive;
 
 gvsoc:
 	git clone https://github.com/FondazioneChipsIT/gvsoc.git; \
@@ -233,7 +244,7 @@ sdk-gitlab:
 ## Clone pulp-runtime as SW stack
 pulp-runtime:
 	git clone https://github.com/FondazioneChipsIT/pulp-runtime.git $@
-	cd $@; git checkout ad6690b0f03e8f8559606cc907125914de4b0873; cd ..
+	cd $@; git checkout ab958e06b37bc05b981dabca9680f72660b8dee1; cd ..
 
 ## Clone regression tests for bare-metal verification
 regression-tests:
@@ -324,3 +335,14 @@ lint:
 
 cdc:
 	$(MAKE) -C sim cdc
+
+PULP_NONFREE_REMOTE ?= git@gitlab.chips.it:digitalresearchline/chips-restricted/pulp-nonfree.git
+PULP_NONFREE_DIR	?= $(ROOT_DIR)/nonfree
+PULP_NONFREE_COMMIT ?= d7274b2dc90d2e2431ef5f009af58a9ba1afdc91
+
+pulp_nonfree_init:
+	git clone $(PULP_NONFREE_REMOTE) $(PULP_NONFREE_DIR)
+	cd $(PULP_NONFREE_DIR) && git checkout $(PULP_NONFREE_COMMIT)
+
+pulp_nonfree_clean:
+	rm -rf $(PULP_NONFREE_DIR)

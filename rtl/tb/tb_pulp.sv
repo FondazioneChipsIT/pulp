@@ -112,7 +112,7 @@ module tb_pulp;
    parameter USE_PULP_BUS_ACCESS = 1;
 
    // UART baud rate in bps
-   parameter  BAUDRATE = 625000;
+   parameter  BAUDRATE = 115200;
 
    // use frequency-locked loop to generate internal clock
    parameter  USE_FLL = 1;
