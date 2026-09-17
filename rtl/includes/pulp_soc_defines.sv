@@ -69,7 +69,6 @@ localparam jtag_idcode_t PulpOpenIdCode = '{
 
 // JTAG
 `define DMI_JTAG_IDCODE PulpOpenIdCode
-// `define DMI_JTAG_IDCODE 32'h249511C3
 
 
 

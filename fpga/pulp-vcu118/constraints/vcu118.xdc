@@ -25,11 +25,6 @@ create_clock -period 100.000 -name tck -waveform {0.000 50.000} [get_ports pad_j
 set_input_jitter tck 1.000
 set_property CLOCK_DEDICATED_ROUTE FALSE [get_nets pad_jtag_tck_IBUF_inst/O]
 
-# vio
-# set_false_path -from [get_pins i_vio/inst/PROBE_OUT_ALL_INST/G_PROBE_OUT[0].PROBE_OUT0_INST/Probe_out_reg[0]/C] -to [get_pins i_pulp/soc_domain_i/pulp_soc_i/soc_peripherals_i/i_udma/i_hyper/udma_hyperbus_i/ddr_clk/r_clk90_o_reg/CLR]
-# set_false_path -from [get_pins i_vio/inst/PROBE_OUT_ALL_INST/G_PROBE_OUT[0].PROBE_OUT0_INST/Probe_out_reg[0]/C] -to [get_pins i_pulp/soc_domain_i/pulp_soc_i/l2_ram_i/CUTS[0].bank_i/gen_1_ports.i_xpm_memory_spram/xpm_memory_base_inst/gen_wr_a.gen_byte_narrow.for_mem_cols[1].mem_reg_3_bram_1/ENARDEN]
-# set_false_path -from [get_pins i_vio/inst/PROBE_OUT_ALL_INST/G_PROBE_OUT[0].PROBE_OUT0_INST/Probe_out_reg[0]/C] -to [get_pins i_pulp/cluster_domain_i/cluster_i/tcdm_banks_i/banks_gen[12].gen_standard_banks.i_bank/gen_1_ports.i_xpm_memory_spram/xpm_memory_base_inst/gen_wr_a.gen_byte_narrow.for_mem_cols[1].mem_reg_uram_0/EN_A]
-
 # minimize routing delay
 set_input_delay -clock tck -clock_fall 5.000 [get_ports pad_jtag_tdi]
 set_input_delay -clock tck -clock_fall 5.000 [get_ports pad_jtag_tms]
