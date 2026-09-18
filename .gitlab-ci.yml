@@ -23,6 +23,7 @@ init:
     paths:
       - nonfree/.gitlab-ci.yml
       - nonfree/.gitlab-ci_fpga.yml
+      - nonfree/.gitlab-ci_gvsoc.yml
 
 subpipe_rtl:
   stage: PULP_CI
@@ -34,6 +35,20 @@ subpipe_rtl:
       - artifact: nonfree/.gitlab-ci.yml
         job: init
     strategy: depend
+
+subpipe_gvsoc:
+  stage: PULP_CI
+  needs: [ init ]
+  variables:
+    PARENT_PIPELINE_SOURCE: $CI_PIPELINE_SOURCE
+  trigger:
+    include:
+      - artifact: nonfree/.gitlab-ci_gvsoc.yml
+        job: init
+    strategy: depend
+  rules:
+    - when: manual
+      allow_failure: false
 
 subpipe_fpga:
   stage: PULP_CI
