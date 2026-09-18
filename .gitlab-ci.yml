@@ -38,6 +38,7 @@ subpipe_rtl:
 subpipe_fpga:
   stage: PULP_CI
   needs: [ init ]
+  when: manual
   variables:
     PARENT_PIPELINE_SOURCE: $CI_PIPELINE_SOURCE
   trigger:
@@ -45,6 +46,3 @@ subpipe_fpga:
       - artifact: nonfree/.gitlab-ci_fpga.yml
         job: init
     strategy: depend
-  rules:
-    - when: manual
-      allow_failure: false
