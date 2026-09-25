@@ -200,11 +200,11 @@ pulp_sdk:
 # gvsoc-pulp submodule, hosted on the same upstream remote: the Deeploy cluster memory
 # sizes and the iDMA model of the cluster DMA.
 GVSOC_URL ?= https://github.com/gvsoc/gvsoc.git
-GVSOC_PULP_BRANCH ?= lz/pulp_open_idma3d
+GVSOC_PULP_BRANCH ?= master
 
 gvsoc_venv:
 	rm -rf $(VENV) && \
-	python3 -m venv $(VENV) && \
+	python3.12 -m venv $(VENV) && \
 	$(VENV)/bin/python -m pip install -U pip && \
 	$(VENV)/bin/python -m pip install -r gvsoc/requirements.txt && \
 	$(VENV)/bin/python -m pip install -r gvsoc/gvrun/requirements.txt && \
@@ -217,7 +217,7 @@ gvsoc:
 	git submodule update --init --recursive; \
 	cd pulp; \
 	git fetch origin; \
-	git checkout -B $(GVSOC_PULP_BRANCH) origin/$(GVSOC_PULP_BRANCH);
+	git checkout origin/$(GVSOC_PULP_BRANCH)
 
 build_gvsoc: gvsoc gvsoc_venv
 	. "$(VENV)/bin/activate"; \
