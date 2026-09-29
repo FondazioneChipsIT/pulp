@@ -21,18 +21,28 @@ init:
   script: make pulp_nonfree_init
   artifacts:
     paths:
-      - nonfree/.gitlab-ci.yml
-      - nonfree/.gitlab-ci_fpga.yml
-      - nonfree/.gitlab-ci_gvsoc.yml
+      - nonfree/new_testing_setup/.gitlab-ci_new_rtl.yml
+      - nonfree/new_testing_setup/.gitlab-ci_new_gvsoc.yml
 
 subpipe_rtl:
-  stage: PULP_CI
+  stage: nonfree
   needs: [ init ]
   variables:
     PARENT_PIPELINE_SOURCE: $CI_PIPELINE_SOURCE
   trigger:
     include:
-      - artifact: nonfree/.gitlab-ci_new.yml
+      - artifact: nonfree/new_testing_setup/.gitlab-ci_new_rtl.yml
+        job: init
+    strategy: depend
+
+subpipe_gvsoc:
+  stage: nonfree
+  needs: [ init ]
+  variables:
+    PARENT_PIPELINE_SOURCE: $CI_PIPELINE_SOURCE
+  trigger:
+    include:
+      - artifact: nonfree/new_testing_setup/.gitlab-ci_new_gvsoc.yml
         job: init
     strategy: depend
 
