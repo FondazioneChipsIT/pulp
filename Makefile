@@ -191,12 +191,12 @@ import_bootcode:
 all: checkout build install vopt sdk
 
 PULP_SDK_REMOTE := https://github.com/FondazioneChipsIT/pulp-sdk.git
-PULP_SDK_COMMIT := 4ecdaa4859bf13edd6d12272a7beab777d1da5c5
+PULP_SDK_COMMIT := 5fc1b60425802920d29b266a0461c1e2e557567f
 
 pulp_sdk:
 	git clone ${PULP_SDK_REMOTE}; \
 	cd pulp-sdk; \
-	git checkout afc257bca317df9ec41d597c5f61aed073df040c; \
+	git checkout ${PULP_SDK_COMMIT}; \
 	git submodule update --init --recursive;
 
 # GVSoC is cloned from upstream. The changes this platform needs live on a branch of the
@@ -366,7 +366,7 @@ cdc:
 
 PULP_NONFREE_REMOTE ?= git@gitlab.chips.it:digitalresearchline/chips-restricted/pulp-nonfree.git
 PULP_NONFREE_DIR	?= $(ROOT_DIR)/nonfree
-PULP_NONFREE_COMMIT ?= 6dd983195bcab61d805dd26adf2437c4833a5b4b
+PULP_NONFREE_COMMIT ?= edfbbf357697b5109b30b55768cd1ccb18eee68a
 
 pulp_nonfree_init:
 	git clone $(PULP_NONFREE_REMOTE) $(PULP_NONFREE_DIR)
