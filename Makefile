@@ -141,12 +141,12 @@ else
 	./generate-scripts --psram-vip
 endif
 
-venv:
+idma_venv:
 	python3 -m venv $(VENV) && \
 	$(VENV)/bin/python -m pip install -U pip && \
 	$(VENV)/bin/python -m pip install -r $(shell bender path idma)/requirements.txt
 
-generate_idma_rtl: venv
+generate_idma_rtl: idma_venv
 	. "$(VENV)/bin/activate" && $(MAKE) -C $(shell bender path idma) idma_hw_all
 
 .PHONY: build
@@ -193,14 +193,36 @@ all: checkout build install vopt sdk
 pulp_sdk:
 	git clone https://github.com/FondazioneChipsIT/pulp-sdk.git; \
 	cd pulp-sdk; \
-	git checkout 362d4d3df37e245455b33790b71f01ecf2261261; \
+	git checkout afc257bca317df9ec41d597c5f61aed073df040c; \
 	git submodule update --init --recursive;
 
+# GVSoC is cloned from upstream. The changes this platform needs live on a branch of the
+# gvsoc-pulp submodule, hosted on the same upstream remote: the Deeploy cluster memory
+# sizes and the iDMA model of the cluster DMA.
+GVSOC_URL ?= https://github.com/gvsoc/gvsoc.git
+GVSOC_PULP_BRANCH ?= master
+
+gvsoc_venv:
+	rm -rf $(VENV) && \
+	python3.12 -m venv $(VENV) && \
+	$(VENV)/bin/python -m pip install -U pip && \
+	$(VENV)/bin/python -m pip install -r gvsoc/requirements.txt && \
+	$(VENV)/bin/python -m pip install -r gvsoc/gvrun/requirements.txt && \
+    $(VENV)/bin/python -m pip install -r gvsoc/config_tree/requirements.txt && \
+    $(VENV)/bin/python -m pip install -r gvsoc/core/requirements.txt
+
 gvsoc:
-	git clone https://github.com/FondazioneChipsIT/gvsoc.git; \
+	git clone $(GVSOC_URL); \
 	cd gvsoc; \
-	git checkout 71d31e53e36baf6b85a02349f1402b99ef71482c; \
-	git submodule update --init --recursive;
+	git submodule update --init --recursive; \
+	cd pulp; \
+	git fetch origin; \
+	git checkout origin/$(GVSOC_PULP_BRANCH)
+
+build_gvsoc: gvsoc gvsoc_venv
+	. "$(VENV)/bin/activate"; \
+	cd gvsoc && source sourceme.sh; \
+	$(MAKE) clean build TARGETS=pulp-open
 
 deeploy:
 	git clone https://github.com/FondazioneChipsIT/Deeploy.git; \
@@ -338,7 +360,7 @@ cdc:
 
 PULP_NONFREE_REMOTE ?= git@gitlab.chips.it:digitalresearchline/chips-restricted/pulp-nonfree.git
 PULP_NONFREE_DIR	?= $(ROOT_DIR)/nonfree
-PULP_NONFREE_COMMIT ?= ac84ee6bf04ba87345979173d16b298f0f8fab0f
+PULP_NONFREE_COMMIT ?= 97bab0ecb43d7be7ddafdba9b1b2054775ed60fe
 
 pulp_nonfree_init:
 	git clone $(PULP_NONFREE_REMOTE) $(PULP_NONFREE_DIR)
