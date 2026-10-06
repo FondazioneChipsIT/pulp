@@ -191,7 +191,7 @@ import_bootcode:
 all: checkout build install vopt sdk
 
 PULP_SDK_REMOTE := https://github.com/FondazioneChipsIT/pulp-sdk.git
-PULP_SDK_COMMIT := 5fc1b60425802920d29b266a0461c1e2e557567f
+PULP_SDK_COMMIT := 6e6f75c6bbe7eb123995039c608a3ce4b2d15692
 
 pulp_sdk:
 	git clone ${PULP_SDK_REMOTE}; \
