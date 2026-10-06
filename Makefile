@@ -224,7 +224,15 @@ gvsoc:
 
 build_gvsoc: gvsoc gvsoc_venv
 	. "$(VENV)/bin/activate"; \
-	cd gvsoc && source sourceme.sh; \
+	cd gvsoc; \
+	sed -i 's/mchan/idma/g' ./pulp/pulp/chips/pulp_open/cluster.json; \
+	source sourceme.sh; \
+	$(MAKE) clean build TARGETS=pulp-open
+
+build_gvsoc_mchan: gvsoc gvsoc_venv
+	. "$(VENV)/bin/activate"; \
+	cd gvsoc; \
+	source sourceme.sh; \
 	$(MAKE) clean build TARGETS=pulp-open
 
 DEEPLOY_REMOTE := https://github.com/FondazioneChipsIT/Deeploy.git
@@ -366,7 +374,7 @@ cdc:
 
 PULP_NONFREE_REMOTE ?= git@gitlab.chips.it:digitalresearchline/chips-restricted/pulp-nonfree.git
 PULP_NONFREE_DIR	?= $(ROOT_DIR)/nonfree
-PULP_NONFREE_COMMIT ?= edfbbf357697b5109b30b55768cd1ccb18eee68a
+PULP_NONFREE_COMMIT ?= ce333d26001705ee5b98909f3f1efb31e1e80991
 
 pulp_nonfree_init:
 	git clone $(PULP_NONFREE_REMOTE) $(PULP_NONFREE_DIR)
