@@ -190,10 +190,13 @@ import_bootcode:
 # continuous integration on jenkins
 all: checkout build install vopt sdk
 
+PULP_SDK_REMOTE := https://github.com/FondazioneChipsIT/pulp-sdk.git
+PULP_SDK_COMMIT := 9839723b9ca4721d5b319f51c9ffba40c5e8c0f3
+
 pulp_sdk:
-	git clone https://github.com/FondazioneChipsIT/pulp-sdk.git; \
+	git clone ${PULP_SDK_REMOTE}; \
 	cd pulp-sdk; \
-	git checkout afc257bca317df9ec41d597c5f61aed073df040c; \
+	git checkout ${PULP_SDK_COMMIT}; \
 	git submodule update --init --recursive;
 
 # GVSoC is cloned from upstream. The changes this platform needs live on a branch of the
@@ -221,13 +224,24 @@ gvsoc:
 
 build_gvsoc: gvsoc gvsoc_venv
 	. "$(VENV)/bin/activate"; \
-	cd gvsoc && source sourceme.sh; \
+	cd gvsoc; \
+	sed -i 's/mchan/idma/g' ./pulp/pulp/chips/pulp_open/cluster.json; \
+	source sourceme.sh; \
 	$(MAKE) clean build TARGETS=pulp-open
 
+build_gvsoc_mchan: gvsoc gvsoc_venv
+	. "$(VENV)/bin/activate"; \
+	cd gvsoc; \
+	source sourceme.sh; \
+	$(MAKE) clean build TARGETS=pulp-open
+
+DEEPLOY_REMOTE := https://github.com/FondazioneChipsIT/Deeploy.git
+DEEPLOY_COMMIT := 43c3335732db2c59bc7148a22ca16a02365a188e
+
 deeploy:
-	git clone https://github.com/FondazioneChipsIT/Deeploy.git; \
+	git clone ${DEEPLOY_REMOTE}; \
 	cd Deeploy; \
-	git checkout 43c3335732db2c59bc7148a22ca16a02365a188e; \
+	git checkout ${DEEPLOY_COMMIT}; \
 	git submodule update --init --recursive; \
 	pip install -e . --extra-index-url=https://pypi.ngc.nvidia.com; \
 	make minimalloc xtensor; \
@@ -360,7 +374,7 @@ cdc:
 
 PULP_NONFREE_REMOTE ?= git@gitlab.chips.it:digitalresearchline/chips-restricted/pulp-nonfree.git
 PULP_NONFREE_DIR	?= $(ROOT_DIR)/nonfree
-PULP_NONFREE_COMMIT ?= 97bab0ecb43d7be7ddafdba9b1b2054775ed60fe
+PULP_NONFREE_COMMIT ?= 752ab9c18b1d0017181e157b99064ab92a936f01
 
 pulp_nonfree_init:
 	git clone $(PULP_NONFREE_REMOTE) $(PULP_NONFREE_DIR)
