@@ -191,7 +191,7 @@ import_bootcode:
 all: checkout build install vopt sdk
 
 PULP_SDK_REMOTE := https://github.com/FondazioneChipsIT/pulp-sdk.git
-PULP_SDK_COMMIT := 9839723b9ca4721d5b319f51c9ffba40c5e8c0f3
+PULP_SDK_COMMIT := a4578526778f4581f27376d924746c34bc381a7b
 
 pulp_sdk:
 	git clone ${PULP_SDK_REMOTE}; \
@@ -374,7 +374,7 @@ cdc:
 
 PULP_NONFREE_REMOTE ?= git@gitlab.chips.it:digitalresearchline/chips-restricted/pulp-nonfree.git
 PULP_NONFREE_DIR	?= $(ROOT_DIR)/nonfree
-PULP_NONFREE_COMMIT ?= b9de512e647e051b2ccc5da91873488083c496f7
+PULP_NONFREE_COMMIT ?= fa568f23958db034d0c7f516f04facc83511940e
 
 pulp_nonfree_init:
 	git clone $(PULP_NONFREE_REMOTE) $(PULP_NONFREE_DIR)
