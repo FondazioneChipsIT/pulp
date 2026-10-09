@@ -25,6 +25,11 @@ create_clock -period 100.000 -name tck -waveform {0.000 50.000} [get_ports pad_j
 set_input_jitter tck 1.000
 set_property CLOCK_DEDICATED_ROUTE FALSE [get_nets pad_jtag_tck_IBUF_inst/O]
 
+# vio
+# set_false_path -from [get_pins i_vio/inst/PROBE_OUT_ALL_INST/G_PROBE_OUT[0].PROBE_OUT0_INST/Probe_out_reg[0]/C] -to [get_pins i_pulp/soc_domain_i/pulp_soc_i/soc_peripherals_i/i_udma/i_hyper/udma_hyperbus_i/ddr_clk/r_clk90_o_reg/CLR]
+# set_false_path -from [get_pins i_vio/inst/PROBE_OUT_ALL_INST/G_PROBE_OUT[0].PROBE_OUT0_INST/Probe_out_reg[0]/C] -to [get_pins i_pulp/soc_domain_i/pulp_soc_i/l2_ram_i/CUTS[0].bank_i/gen_1_ports.i_xpm_memory_spram/xpm_memory_base_inst/gen_wr_a.gen_byte_narrow.for_mem_cols[1].mem_reg_3_bram_1/ENARDEN]
+# set_false_path -from [get_pins i_vio/inst/PROBE_OUT_ALL_INST/G_PROBE_OUT[0].PROBE_OUT0_INST/Probe_out_reg[0]/C] -to [get_pins i_pulp/cluster_domain_i/cluster_i/tcdm_banks_i/banks_gen[12].gen_standard_banks.i_bank/gen_1_ports.i_xpm_memory_spram/xpm_memory_base_inst/gen_wr_a.gen_byte_narrow.for_mem_cols[1].mem_reg_uram_0/EN_A]
+
 # minimize routing delay
 set_input_delay -clock tck -clock_fall 5.000 [get_ports pad_jtag_tdi]
 set_input_delay -clock tck -clock_fall 5.000 [get_ports pad_jtag_tms]
@@ -204,100 +209,101 @@ set_property -dict {PACKAGE_PIN BB21  IOSTANDARD LVCMOS18} [get_ports pad_uart_t
 # QSPI mapping (OK)
 ######################################################################
 # PULP pad_qspi_sdio0 - FPGA BD11 - FMC  H8  
-set_property -dict "PACKAGE_PIN BD11 IOSTANDARD LVCMOS18"   [get_ports FMC_qspi_sdio0]
+#set_property -dict "PACKAGE_PIN BD11 IOSTANDARD LVCMOS18"   [get_ports FMC_qspi_sdio0]
 # PULP pad_qspi_sdio1 - FPGA BC13 - FMC G16
-set_property -dict "PACKAGE_PIN BC13 IOSTANDARD LVCMOS18"   [get_ports FMC_qspi_sdio1]
+#set_property -dict "PACKAGE_PIN BC13 IOSTANDARD LVCMOS18"   [get_ports FMC_qspi_sdio1]
 # PULP pad_qspi_sdio2 - FPGA BF12 - FMC H10
-set_property -dict "PACKAGE_PIN BF12 IOSTANDARD LVCMOS18"  [get_ports FMC_qspi_sdio2]
+#set_property -dict "PACKAGE_PIN BF12 IOSTANDARD LVCMOS18"  [get_ports FMC_qspi_sdio2]
 # PULP pad_qspi_sdio3 - FPGA AY9 - FMC G6
-set_property -dict "PACKAGE_PIN AY9 IOSTANDARD LVCMOS18"   [get_ports FMC_qspi_sdio3]
+#set_property -dict "PACKAGE_PIN AY9 IOSTANDARD LVCMOS18"   [get_ports FMC_qspi_sdio3]
 # PULP pad_qspi_csn0 - FPGA BB16 - FMC H19
-set_property -dict "PACKAGE_PIN BB16 IOSTANDARD LVCMOS18"  [get_ports FMC_qspi_csn0]
+#set_property -dict "PACKAGE_PIN BB16 IOSTANDARD LVCMOS18"  [get_ports FMC_qspi_csn0]
 # PULP pad_qspi_sck - FPGA BC14 - FMC G15
-set_property -dict "PACKAGE_PIN BC14 IOSTANDARD LVCMOS18"   [get_ports FMC_qspi_sck]
+#set_property -dict "PACKAGE_PIN BC14 IOSTANDARD LVCMOS18"   [get_ports FMC_qspi_sck]
 # GAP pad_spim0_sck - FPGA BC11 - FMC H7
-set_property -dict "PACKAGE_PIN BC11 IOSTANDARD LVCMOS18"   [get_ports FMC_qspi_csn1]
+#set_property -dict "PACKAGE_PIN BC11 IOSTANDARD LVCMOS18"   [get_ports FMC_qspi_csn1]
 
 ######################################################################
 # SDIO mapping (TO CHECK)
 ######################################################################
 # PULP pad_sdio_sdio0 - FPGA N28 - ZCU102 GPIO PMOD HEADER J53.1
-set_property -dict "PACKAGE_PIN AY14 IOSTANDARD LVCMOS18"  [get_ports FMC_sdio_data0]
+#set_property -dict "PACKAGE_PIN AY14 IOSTANDARD LVCMOS18"  [get_ports FMC_sdio_data0]
 # PULP pad_sdio_sdio1 - FPGA M30 - ZCU102 GPIO PMOD HEADER J53.3
-set_property -dict "PACKAGE_PIN AY15 IOSTANDARD LVCMOS18"  [get_ports FMC_sdio_data1]
+#set_property -dict "PACKAGE_PIN AY15 IOSTANDARD LVCMOS18"  [get_ports FMC_sdio_data1]
 # PULP pad_sdio_sdio2 - FPGA N30 - ZCU102 GPIO PMOD HEADER J53.5
-set_property -dict "PACKAGE_PIN AW15 IOSTANDARD LVCMOS18"  [get_ports FMC_sdio_data2]
+#set_property -dict "PACKAGE_PIN AW15 IOSTANDARD LVCMOS18"  [get_ports FMC_sdio_data2]
 # PULP pad_sdio_sdio3 - FPGA P30 - ZCU102 GPIO PMOD HEADER J53.7
-set_property -dict "PACKAGE_PIN AV15 IOSTANDARD LVCMOS18"  [get_ports FMC_sdio_data3]
+#set_property -dict "PACKAGE_PIN AV15 IOSTANDARD LVCMOS18"  [get_ports FMC_sdio_data3]
 # PULP pad_sdio_cmd - FPGA P29 - ZCU102 GPIO PMOD HEADER J53.2
-set_property -dict "PACKAGE_PIN AV16 IOSTANDARD LVCMOS18"  [get_ports FMC_sdio_cmd]
+#set_property -dict "PACKAGE_PIN AV16 IOSTANDARD LVCMOS18"  [get_ports FMC_sdio_cmd]
 # PULP pad_sdio_sck - FPGA L31 - ZCU102 GPIO PMOD HEADER J53.4
-set_property -dict "PACKAGE_PIN AU16 IOSTANDARD LVCMOS18"  [get_ports FMC_sdio_sck]
+#set_property -dict "PACKAGE_PIN AU16 IOSTANDARD LVCMOS18"  [get_ports FMC_sdio_sck]
 
 ######################################################################
 # I2S master mapping (OK)
 ######################################################################
 # PULP pad_i2s_mst_sck - FPGA AR13 - FMC H29
-set_property -dict "PACKAGE_PIN AR13 IOSTANDARD LVCMOS18" [get_ports FMC_i2s0_sck]
+#set_property -dict "PACKAGE_PIN AR13 IOSTANDARD LVCMOS18" [get_ports FMC_i2s0_sck]
 # PULP pad_i2s_mst_ws - FPGA AW8 - FMC C18
-set_property -dict "PACKAGE_PIN AW8 IOSTANDARD LVCMOS18" [get_ports FMC_i2s0_ws]
+#set_property -dict "PACKAGE_PIN AW8 IOSTANDARD LVCMOS18" [get_ports FMC_i2s0_ws]
 # PULP pad_i2s_slv_sdi0 - FPGA BB7 - FMC D1 -- not mappable --mapped into H2 (dummy)
-set_property -dict "PACKAGE_PIN BB7 IOSTANDARD LVCMOS18" [get_ports FMC_i2s0_sdi]
+#set_property -dict "PACKAGE_PIN BB7 IOSTANDARD LVCMOS18" [get_ports FMC_i2s0_sdi]
 # PULP pad_i2s_slv_sdi1 - FPGA BD13 - FMC C10
-set_property -dict "PACKAGE_PIN BD13 IOSTANDARD LVCMOS18" [get_ports FMC_i2s1_sdi]
+#set_property -dict "PACKAGE_PIN BD13 IOSTANDARD LVCMOS18" [get_ports FMC_i2s1_sdi]
 
 ######################################################################
 # I2C0 mapping (OK)
 ######################################################################
 # PULP pad_i3c2_scl - FPGA AJ12 - FMC H38
-set_property -dict "PACKAGE_PIN AJ12 IOSTANDARD LVCMOS18"  [get_ports FMC_i2c0_scl]
+#set_property -dict "PACKAGE_PIN AJ12 IOSTANDARD LVCMOS18"  [get_ports FMC_i2c0_scl]
 # PULP pad_i3c2_sda - FPGA AJ13 - FMC H37
-set_property -dict "PACKAGE_PIN AJ13 IOSTANDARD LVCMOS18"  [get_ports FMC_i2c0_sda]
+#set_property -dict "PACKAGE_PIN AJ13 IOSTANDARD LVCMOS18"  [get_ports FMC_i2c0_sda]
 
 ######################################################################
 # Camera mapping (OK)
 ######################################################################
 # PULP pad_cam_pclk - FPGA AR14 - FMC D20
-set_property -dict "PACKAGE_PIN AR14 IOSTANDARD LVCMOS18" [get_ports FMC_cam_pclk]
+#set_property -dict "PACKAGE_PIN AR14 IOSTANDARD LVCMOS18" [get_ports FMC_cam_pclk]
 # PULP pad_cam_hsync - FPGA AT14 - FMC D21
-set_property -dict "PACKAGE_PIN AT14 IOSTANDARD LVCMOS18" [get_ports FMC_cam_hsync]
+#set_property -dict "PACKAGE_PIN AT14 IOSTANDARD LVCMOS18" [get_ports FMC_cam_hsync]
 # PULP pad_cam_data0 - FPGA AP16 - FMC D24
-set_property -dict "PACKAGE_PIN AP16 IOSTANDARD LVCMOS18" [get_ports FMC_cam_data0]
+#set_property -dict "PACKAGE_PIN AP16 IOSTANDARD LVCMOS18" [get_ports FMC_cam_data0]
 # PULP pad_cam_data1 - FPGA AN16 - FMC D23
-set_property -dict "PACKAGE_PIN AN16 IOSTANDARD LVCMOS18" [get_ports FMC_cam_data1]
+#set_property -dict "PACKAGE_PIN AN16 IOSTANDARD LVCMOS18" [get_ports FMC_cam_data1]
 # PULP pad_cam_data2 - FPGA AP12 - FMC C22
-set_property -dict "PACKAGE_PIN AP12 IOSTANDARD LVCMOS18"  [get_ports FMC_cam_data2]
+#set_property -dict "PACKAGE_PIN AP12 IOSTANDARD LVCMOS18"  [get_ports FMC_cam_data2]
 # PULP pad_cam_data3 - FPGA AK15 - FMC D26
-set_property -dict "PACKAGE_PIN AK15 IOSTANDARD LVCMOS18" [get_ports FMC_cam_data3]
+#set_property -dict "PACKAGE_PIN AK15 IOSTANDARD LVCMOS18" [get_ports FMC_cam_data3]
 # PULP pad_cam_data4 - FPGA AR12 - FMC C23
-set_property -dict "PACKAGE_PIN AR12 IOSTANDARD LVCMOS18"  [get_ports FMC_cam_data4]
+#set_property -dict "PACKAGE_PIN AR12 IOSTANDARD LVCMOS18"  [get_ports FMC_cam_data4]
 # PULP pad_cam_data5 - FPGA AL15 - FMC D27
-set_property -dict "PACKAGE_PIN AL15 IOSTANDARD LVCMOS18" [get_ports FMC_cam_data5]
+#set_property -dict "PACKAGE_PIN AL15 IOSTANDARD LVCMOS18" [get_ports FMC_cam_data5]
 # PULP pad_cam_data6 - FPGA AY7 - FMC D18
-set_property -dict "PACKAGE_PIN AY7 IOSTANDARD LVCMOS18" [get_ports FMC_cam_data6]
+#set_property -dict "PACKAGE_PIN AY7 IOSTANDARD LVCMOS18" [get_ports FMC_cam_data6]
 # PULP pad_cam_data7 - FPGA AM14 - FMC C27
-set_property -dict "PACKAGE_PIN AM14 IOSTANDARD LVCMOS18" [get_ports FMC_cam_data7]
+#set_property -dict "PACKAGE_PIN AM14 IOSTANDARD LVCMOS18" [get_ports FMC_cam_data7]
 # PULP pad_cam_vsync - FPGA AW7 - FMC C19
-set_property -dict "PACKAGE_PIN AW7 IOSTANDARD LVCMOS18" [get_ports FMC_cam_vsync]
+#set_property -dict "PACKAGE_PIN AW7 IOSTANDARD LVCMOS18" [get_ports FMC_cam_vsync]
 
 ####################################################################
 # Hyper Bus
 ####################################################################
 
-set_property -dict "PACKAGE_PIN AV14 IOSTANDARD LVCMOS18"  [get_ports FMC_hyper_csn0]
-set_property -dict "PACKAGE_PIN AV13 IOSTANDARD LVCMOS18"  [get_ports FMC_hyper_csn1]
-set_property -dict "PACKAGE_PIN BD12 IOSTANDARD LVCMOS18"  [get_ports FMC_hyper_ck]
-set_property -dict "PACKAGE_PIN BE12 IOSTANDARD LVCMOS18"  [get_ports FMC_hyper_ckn]
-set_property -dict "PACKAGE_PIN BE15 IOSTANDARD LVCMOS18"  [get_ports FMC_hyper_rwds0]
-set_property -dict "PACKAGE_PIN BF15 IOSTANDARD LVCMOS18"  [get_ports FMC_hyper_reset]
-set_property -dict "PACKAGE_PIN BC9  IOSTANDARD LVCMOS18"  [get_ports FMC_hyper_dqio0]
-set_property -dict "PACKAGE_PIN BC8  IOSTANDARD LVCMOS18"  [get_ports FMC_hyper_dqio1]
-set_property -dict "PACKAGE_PIN BF11 IOSTANDARD LVCMOS18"  [get_ports FMC_hyper_dqio2]
-set_property -dict "PACKAGE_PIN BC15 IOSTANDARD LVCMOS18"  [get_ports FMC_hyper_dqio3]
-set_property -dict "PACKAGE_PIN BD15 IOSTANDARD LVCMOS18"  [get_ports FMC_hyper_dqio4]
-set_property -dict "PACKAGE_PIN BA16 IOSTANDARD LVCMOS18"  [get_ports FMC_hyper_dqio5]
-set_property -dict "PACKAGE_PIN BA15 IOSTANDARD LVCMOS18"  [get_ports FMC_hyper_dqio6]
-set_property -dict "PACKAGE_PIN BC16 IOSTANDARD LVCMOS18"  [get_ports FMC_hyper_dqio7]
+set_property -dict {PACKAGE_PIN AW13 IOSTANDARD LVCMOS18} [get_ports FMC_hyper_csn0]
+set_property -dict {PACKAGE_PIN AY13 IOSTANDARD LVCMOS18} [get_ports FMC_hyper_csn1]
+set_property -dict {PACKAGE_PIN AY9 IOSTANDARD LVCMOS18} [get_ports FMC_hyper_ck]
+set_property -dict {PACKAGE_PIN BA9 IOSTANDARD LVCMOS18} [get_ports FMC_hyper_ckn]
+set_property -dict {PACKAGE_PIN BC14 IOSTANDARD LVCMOS18} [get_ports FMC_hyper_rwds0]
+set_property -dict {PACKAGE_PIN AT12 IOSTANDARD LVCMOS18} [get_ports FMC_hyper_reset]
+set_property -dict {PACKAGE_PIN BF15 IOSTANDARD LVCMOS18} [get_ports FMC_hyper_dqio0]
+set_property -dict {PACKAGE_PIN BE15 IOSTANDARD LVCMOS18} [get_ports FMC_hyper_dqio1]
+set_property -dict {PACKAGE_PIN BE12 IOSTANDARD LVCMOS18} [get_ports FMC_hyper_dqio2]
+set_property -dict {PACKAGE_PIN BD12 IOSTANDARD LVCMOS18} [get_ports FMC_hyper_dqio3]
+set_property -dict {PACKAGE_PIN AV9 IOSTANDARD LVCMOS18} [get_ports FMC_hyper_dqio4]
+set_property -dict {PACKAGE_PIN AV8 IOSTANDARD LVCMOS18} [get_ports FMC_hyper_dqio5]
+set_property -dict {PACKAGE_PIN AW11 IOSTANDARD LVCMOS18} [get_ports FMC_hyper_dqio6]
+set_property -dict {PACKAGE_PIN AY10 IOSTANDARD LVCMOS18} [get_ports FMC_hyper_dqio7]
+
 
 
 #set_property -dict {PACKAGE_PIN D20 IOSTANDARD LVCMOS33} [get_ports test_hyper_cko]

@@ -26,6 +26,7 @@ module xilinx_pulp (
   inout wire  pad_uart_rx,
   inout wire  pad_uart_tx,
 
+/*
   inout       FMC_sdio_data0,
   inout       FMC_sdio_data1,
   inout       FMC_sdio_data2,
@@ -62,7 +63,7 @@ module xilinx_pulp (
   inout       FMC_cam_data6,
   inout       FMC_cam_data7,
   inout       FMC_cam_vsync,
-
+*/
      
   inout       FMC_hyper_dqio0 ,
   inout       FMC_hyper_dqio1 ,
@@ -81,6 +82,7 @@ module xilinx_pulp (
 
   input wire  pad_reset,
 
+//  input wire  pad_jtag_trst,
   input wire  pad_jtag_tck,
   input wire  pad_jtag_tdi,
   output wire pad_jtag_tdo,
@@ -95,6 +97,7 @@ module xilinx_pulp (
 
   wire        reset_n;
 
+  //assign reset_n = ~pad_reset & pad_jtag_trst & ~vio_reset;
   assign reset_n = ~pad_reset & vio_reset;
 
   wire [7:0] s_pad_hyper_dq0;
@@ -145,17 +148,27 @@ module xilinx_pulp (
     .USE_HWPE    (USE_HWPE ),
     .USE_HWPE_CL (USE_HWPE )
   ) i_pulp (
+  /*
     .pad_spim_sdio0 (FMC_qspi_sdio0 ),
     .pad_spim_sdio1 (FMC_qspi_sdio1 ),
     .pad_spim_sdio2 (FMC_qspi_sdio2 ),
     .pad_spim_sdio3 (FMC_qspi_sdio3 ),
     .pad_spim_csn0  (FMC_qspi_csn0  ),
     .pad_spim_csn1  (FMC_qspi_csn1  ),
-    .pad_spim_sck   (FMC_qspi_sck   ),
+    .pad_spim_sck   (FMC_qspi_sck   ),*/
+
+    .pad_spim_sdio0 ( ),
+    .pad_spim_sdio1 ( ),
+    .pad_spim_sdio2 ( ),
+    .pad_spim_sdio3 ( ),
+    .pad_spim_csn0  ( ),
+    .pad_spim_csn1  ( ),
+    .pad_spim_sck   ( ),
     
     .pad_uart_rx    (pad_uart_rx    ), //keep
     .pad_uart_tx    (pad_uart_tx    ), //keep
-    
+
+/*    
     .pad_cam_pclk   (FMC_cam_pclk   ),
     .pad_cam_hsync  (FMC_cam_hsync  ),
     .pad_cam_data0  (FMC_cam_data0  ),
@@ -167,22 +180,52 @@ module xilinx_pulp (
     .pad_cam_data6  (FMC_cam_data6  ),
     .pad_cam_data7  (FMC_cam_data7  ),
     .pad_cam_vsync  (FMC_cam_vsync  ),
-    
-    
+*/
+
+    .pad_cam_pclk   (  ),
+    .pad_cam_hsync  (  ),
+    .pad_cam_data0  (  ),
+    .pad_cam_data1  (  ),
+    .pad_cam_data2  (  ),
+    .pad_cam_data3  (  ),
+    .pad_cam_data4  (  ),
+    .pad_cam_data5  (  ),
+    .pad_cam_data6  (  ),
+    .pad_cam_data7  (  ),
+    .pad_cam_vsync  (  ),
+        
+    /*
     .pad_sdio_clk   (FMC_sdio_sck   ),
     .pad_sdio_cmd   (FMC_sdio_cmd   ),
     .pad_sdio_data0 (FMC_sdio_data0 ),
     .pad_sdio_data1 (FMC_sdio_data1 ),
     .pad_sdio_data2 (FMC_sdio_data2 ),
     .pad_sdio_data3 (FMC_sdio_data3 ),
-    
+    */
+
+    .pad_sdio_clk   (  ),
+    .pad_sdio_cmd   (  ),
+    .pad_sdio_data0 (  ),
+    .pad_sdio_data1 (  ),
+    .pad_sdio_data2 (  ),
+    .pad_sdio_data3 (  ),
+
+/*
     .pad_i2c0_sda   (FMC_i2c0_sda   ),
     .pad_i2c0_scl   (FMC_i2c0_scl   ),
     .pad_i2s0_sck   (FMC_i2s0_sck   ),
     .pad_i2s0_ws    (FMC_i2s0_ws    ),
     .pad_i2s0_sdi   (FMC_i2s0_sdi   ),
     .pad_i2s1_sdi   (FMC_i2s1_sdi   ),
-    
+*/
+
+    .pad_i2c0_sda   (   ),
+    .pad_i2c0_scl   (   ),
+    .pad_i2s0_sck   (   ),
+    .pad_i2s0_ws    (   ),
+    .pad_i2s0_sdi   (   ),
+    .pad_i2s1_sdi   (   ),
+
     .pad_reset_n    (reset_n        ),
     
     .pad_hyper_dq0  (s_pad_hyper_dq0),
