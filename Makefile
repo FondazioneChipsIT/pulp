@@ -254,13 +254,14 @@ deeploy:
 deeploy_chipsit:
 	eval $$(ssh-agent) && \
 	ssh-add $(SSH_PRIVATE_KEY) && \
+	ssh-add -l && \
 	DOCKER_BUILDKIT=1 docker build \
-	--ssh default \
-	--build-context pulp_root=/home/gitlab-user/ \
-	--build-context external_tools=/tools \
-	-f Dockerfile.chipsit_CI_deeploy \
-	--build-arg BASE_IMAGE=$(TOOLCHAIN_IMAGE) \
-	-t $(DEEPLOY_IMAGE) ..
+		--ssh default \
+		--build-context pulp_root=/home/gitlab-user/ \
+		--build-context external_tools=/tools \
+		-f Dockerfile.chipsit_CI_deeploy \
+		--build-arg BASE_IMAGE=$(TOOLCHAIN_IMAGE) \
+		-t $(DEEPLOY_IMAGE) ..
 
 sdk:
 	if [ ! -e pulp-builder ]; then \
