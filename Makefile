@@ -236,7 +236,7 @@ build_gvsoc_mchan: gvsoc gvsoc_venv
 	$(MAKE) clean build TARGETS=pulp-open
 
 DEEPLOY_REMOTE := https://github.com/FondazioneChipsIT/Deeploy.git
-DEEPLOY_COMMIT := 6faccc607579a2fe78fc1bd43716a5a1926846d4
+DEEPLOY_COMMIT := bacfe9fa015de3891c6d1275ce1355a12a8aa093
 
 deeploy:
 	git clone ${DEEPLOY_REMOTE}; \
@@ -382,3 +382,10 @@ pulp_nonfree_init:
 
 pulp_nonfree_clean:
 	rm -rf $(PULP_NONFREE_DIR)
+
+run_chipsit_deeploy_container:
+	podman run --rm -it \
+	-v /tools:/tools:ro \
+	-v /opt/riscv:/opt/riscv:ro \
+	ghcr.io/pulp-platform/deeploy:latest \
+	/bin/bash
