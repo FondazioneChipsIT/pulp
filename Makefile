@@ -14,7 +14,7 @@ export TB_PATH=$(PULP_PATH)/rtl/tb
 
 ROOT_DIR = $(strip $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST)))))
 BENDER_GIT_DIR=$(PULP_PATH)/.bender/git/checkouts
-BENDER_BIN := $(shell which bender)
+BENDER_BIN ?= $(shell which bender)
 
 define declareInstallFile
 
@@ -144,10 +144,10 @@ endif
 idma_venv:
 	python3 -m venv $(VENV) && \
 	$(VENV)/bin/python -m pip install -U pip && \
-	$(VENV)/bin/python -m pip install -r $(shell bender path idma)/requirements.txt
+	$(VENV)/bin/python -m pip install -r $(shell ./bender path idma)/requirements.txt
 
 generate_idma_rtl: idma_venv
-	. "$(VENV)/bin/activate" && $(MAKE) -C $(shell bender path idma) idma_hw_all
+	. "$(VENV)/bin/activate" && $(MAKE) -C $(shell ./bender path idma) idma_hw_all
 
 .PHONY: build
 ## Build the RTL model for vsim
@@ -236,7 +236,7 @@ build_gvsoc_mchan: gvsoc gvsoc_venv
 	$(MAKE) clean build TARGETS=pulp-open
 
 DEEPLOY_REMOTE := https://github.com/FondazioneChipsIT/Deeploy.git
-DEEPLOY_COMMIT := cd8781e8bbe1a2ad8a9818b7f395d18e6e2df999
+DEEPLOY_COMMIT := 6faccc607579a2fe78fc1bd43716a5a1926846d4
 
 deeploy:
 	git clone ${DEEPLOY_REMOTE}; \
