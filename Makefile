@@ -236,7 +236,7 @@ build_gvsoc_mchan: gvsoc gvsoc_venv
 	$(MAKE) clean build TARGETS=pulp-open
 
 DEEPLOY_REMOTE := https://github.com/FondazioneChipsIT/Deeploy.git
-DEEPLOY_COMMIT := bacfe9fa015de3891c6d1275ce1355a12a8aa093
+DEEPLOY_COMMIT := a069de262dcd165ae5aa54a69c601fdc78cee984
 
 deeploy:
 	git clone ${DEEPLOY_REMOTE}; \
