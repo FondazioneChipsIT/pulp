@@ -39,6 +39,10 @@ VLOG_ARGS += -suppress 2583 -suppress 13314 \"+incdir+\$$ROOT/rtl/includes\"
 BENDER_SIM_BUILD_DIR = sim
 BENDER_FPGA_SCRIPTS_DIR = fpga/pulp/tcl/generated
 
+TOOLCHAIN_IMAGE ?= ghcr.io/pulp-platform/deeploy-toolchain:latest
+DEEPLOY_IMAGE ?= ghcr.io/pulp-platform/deeploy:latest
+SSH_PRIVATE_KEY ?= ~/.ssh/id_ed25519
+
 CompileFlags := +acc -permissive -suppress 2583 -suppress 13314 -suppress vlog-1952
 
 VENV := venv
@@ -236,7 +240,7 @@ build_gvsoc_mchan: gvsoc gvsoc_venv
 	$(MAKE) clean build TARGETS=pulp-open
 
 DEEPLOY_REMOTE := https://github.com/FondazioneChipsIT/Deeploy.git
-DEEPLOY_COMMIT := a069de262dcd165ae5aa54a69c601fdc78cee984
+DEEPLOY_COMMIT := 764a8cc4ff7add03cced291922699a534ceeb441
 
 deeploy:
 	git clone ${DEEPLOY_REMOTE}; \
@@ -245,6 +249,18 @@ deeploy:
 	git submodule update --init --recursive; \
 	pip install -e . --extra-index-url=https://pypi.ngc.nvidia.com; \
 	make minimalloc xtensor; \
+
+# Build the final Deeploy image for chipsit CI
+deeploy_chipsit:
+	eval $$(ssh-agent) && \
+	ssh-add $(SSH_PRIVATE_KEY) && \
+	DOCKER_BUILDKIT=1 docker build \
+	--ssh default \
+	--build-context pulp_root=/home/gitlab-user/ \
+	--build-context external_tools=/tools \
+	-f Dockerfile.chipsit_CI_deeploy \
+	--build-arg BASE_IMAGE=$(TOOLCHAIN_IMAGE) \
+	-t $(DEEPLOY_IMAGE) ..
 
 sdk:
 	if [ ! -e pulp-builder ]; then \
