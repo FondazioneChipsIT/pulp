@@ -243,6 +243,7 @@ DEEPLOY_REMOTE := https://github.com/FondazioneChipsIT/Deeploy.git
 DEEPLOY_COMMIT := 764a8cc4ff7add03cced291922699a534ceeb441
 
 deeploy:
+	source setup/deeploy.sh; \
 	git clone ${DEEPLOY_REMOTE}; \
 	cd Deeploy; \
 	git checkout ${DEEPLOY_COMMIT}; \
@@ -258,7 +259,7 @@ deeploy_chipsit:
 	DOCKER_BUILDKIT=1 docker build \
 		--ssh default \
 		--build-context pulp_root=/home/gitlab-user/ \
-		--build-context external_tools=/tools \
+		--build-context toolchains=/opt/riscv/ \
 		-f ./nonfree/new_testing_setup/Dockerfile.chipsit_CI_deeploy \
 		--build-arg BASE_IMAGE=$(TOOLCHAIN_IMAGE) \
 		-t $(DEEPLOY_IMAGE) ..
@@ -391,7 +392,7 @@ cdc:
 
 PULP_NONFREE_REMOTE ?= git@gitlab.chips.it:digitalresearchline/chips-restricted/pulp-nonfree.git
 PULP_NONFREE_DIR	?= $(ROOT_DIR)/nonfree
-PULP_NONFREE_COMMIT ?= 03a26c3a4a859702077020da58c1c25209e82462
+PULP_NONFREE_COMMIT ?= 7d52903dbf2e5b8f8fd88a12296082a2a3931d3c
 
 pulp_nonfree_init:
 	git clone $(PULP_NONFREE_REMOTE) $(PULP_NONFREE_DIR)
@@ -402,7 +403,8 @@ pulp_nonfree_clean:
 
 run_chipsit_deeploy_container:
 	podman run --rm -it \
-		-v /tools:/tools:ro \
-		-v /opt/riscv:/opt/riscv:ro \
-		ghcr.io/pulp-platform/deeploy:latest \
-		/bin/zsh
+	-v /tools:/tools:ro \
+	-v /opt/riscv:/opt/riscv:ro \
+	-v /opt/rh:/opt/rh \
+	ghcr.io/pulp-platform/deeploy:latest \
+	/bin/zsh
