@@ -4,7 +4,7 @@ DEEPLOY_ROOT="$ROOT"/Deeploy
 export MINIMALLOC_INSTALL_DIR=$DEEPLOY_ROOT/install/minimalloc
 export PULP_SDK_HOME=$ROOT/pulp-sdk
 export GVSOC_INSTALL_DIR=$ROOT/gvsoc/install
-if [[-v IS_CONTAINER ]]; then
+if [[ -v IS_CONTAINER ]]; then
     export LLVM_INSTALL_DIR=/app/install/llvm_toolchain
 else
     export LLVM_INSTALL_DIR=/opt/riscv/snitch-llvm-15.0.0-snitch-0.1.0/
