@@ -260,7 +260,7 @@ deeploy_container:
 		--ssh default \
 		--build-context pulp_root=/home/gitlab-user/ \
 		--build-context toolchains=/opt/riscv/ \
-		-f ${ROOT_DIR}/nonfree/new_testing_setup/Dockerfile.deeploy_container \
+		-f ${ROOT_DIR}/nonfree/new_testing_setup/Dockerfile.deeploy_container_CI \
 		--build-arg BASE_IMAGE=$(TOOLCHAIN_IMAGE) \
 		-t $(DEEPLOY_IMAGE) ..
 
@@ -392,7 +392,7 @@ cdc:
 
 PULP_NONFREE_REMOTE ?= git@gitlab.chips.it:digitalresearchline/chips-restricted/pulp-nonfree.git
 PULP_NONFREE_DIR	?= $(ROOT_DIR)/nonfree
-PULP_NONFREE_COMMIT ?= 5feb134a7834e7adafcb53b289a2e226682fc7ea
+PULP_NONFREE_COMMIT ?= bdfd86d2a801a239a7a1c0bd14c0e893b6d5886f
 
 pulp_nonfree_init:
 	git clone $(PULP_NONFREE_REMOTE) $(PULP_NONFREE_DIR)
