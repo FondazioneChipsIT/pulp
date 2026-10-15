@@ -41,7 +41,7 @@ BENDER_FPGA_SCRIPTS_DIR = fpga/pulp/tcl/generated
 
 TOOLCHAIN_IMAGE ?= ghcr.io/pulp-platform/deeploy-toolchain:latest
 DEEPLOY_IMAGE ?= ghcr.io/pulp-platform/deeploy:latest
-SSH_PRIVATE_KEY ?= ~/.ssh/id_ed25519
+SSH_PRIVATE_KEY ?= ~/.ssh/nonfree_ed25519
 
 CompileFlags := +acc -permissive -suppress 2583 -suppress 13314 -suppress vlog-1952
 
@@ -260,7 +260,7 @@ deeploy_container:
 		--ssh default \
 		--build-context pulp_root=/home/gitlab-user/ \
 		--build-context toolchains=/opt/riscv/ \
-		-f ./nonfree/new_testing_setup/Dockerfile.deeploy_container \
+		-f ${ROOT_DIR}/nonfree/new_testing_setup/Dockerfile.deeploy_container \
 		--build-arg BASE_IMAGE=$(TOOLCHAIN_IMAGE) \
 		-t $(DEEPLOY_IMAGE) ..
 
@@ -392,7 +392,7 @@ cdc:
 
 PULP_NONFREE_REMOTE ?= git@gitlab.chips.it:digitalresearchline/chips-restricted/pulp-nonfree.git
 PULP_NONFREE_DIR	?= $(ROOT_DIR)/nonfree
-PULP_NONFREE_COMMIT ?= e5a508c9bcef8376d8046225ab71fce752f87326
+PULP_NONFREE_COMMIT ?= 5feb134a7834e7adafcb53b289a2e226682fc7ea
 
 pulp_nonfree_init:
 	git clone $(PULP_NONFREE_REMOTE) $(PULP_NONFREE_DIR)
