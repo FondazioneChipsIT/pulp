@@ -7,3 +7,4 @@ module load pulp-gcc/1.0.16
 export PULP_RISCV_GCC_TOOLCHAIN=/opt/riscv/pulp-gcc-1.0.16/
 source setup/vsim.sh
 export PATH=$ROOT/gvsoc/install/bin/:$PATH
+export IS_CONTAINER=1
