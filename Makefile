@@ -407,7 +407,7 @@ run_chipsit_deeploy_container:
 	-v /opt/riscv:/opt/riscv:ro \
 	-v /opt/rh:/opt/rh \
 	ghcr.io/pulp-platform/deeploy:latest \
-	app/pulp/deeploy_ci.sh
+	/bin/bash app/pulp/deeploy_ci.sh
 
 run_chipsit_deeploy_container_interactive:
 	podman run --rm -it \
