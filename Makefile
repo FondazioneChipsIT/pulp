@@ -252,7 +252,7 @@ deeploy:
 	make minimalloc xtensor; \
 
 # Build the final Deeploy image for chipsit CI
-deeploy_chipsit:
+deeploy_container:
 	eval $$(ssh-agent) && \
 	ssh-add $(SSH_PRIVATE_KEY) && \
 	ssh-add -l && \
@@ -260,7 +260,7 @@ deeploy_chipsit:
 		--ssh default \
 		--build-context pulp_root=/home/gitlab-user/ \
 		--build-context toolchains=/opt/riscv/ \
-		-f ./nonfree/new_testing_setup/Dockerfile.chipsit_CI_deeploy \
+		-f ./nonfree/new_testing_setup/Dockerfile.deeploy_container \
 		--build-arg BASE_IMAGE=$(TOOLCHAIN_IMAGE) \
 		-t $(DEEPLOY_IMAGE) ..
 
@@ -392,7 +392,7 @@ cdc:
 
 PULP_NONFREE_REMOTE ?= git@gitlab.chips.it:digitalresearchline/chips-restricted/pulp-nonfree.git
 PULP_NONFREE_DIR	?= $(ROOT_DIR)/nonfree
-PULP_NONFREE_COMMIT ?= 7d52903dbf2e5b8f8fd88a12296082a2a3931d3c
+PULP_NONFREE_COMMIT ?= df88d47c50edcbdae0eb706cee4ec55921401ef6
 
 pulp_nonfree_init:
 	git clone $(PULP_NONFREE_REMOTE) $(PULP_NONFREE_DIR)
@@ -402,6 +402,14 @@ pulp_nonfree_clean:
 	rm -rf $(PULP_NONFREE_DIR)
 
 run_chipsit_deeploy_container:
+	podman run --rm \
+	-v /tools:/tools:ro \
+	-v /opt/riscv:/opt/riscv:ro \
+	-v /opt/rh:/opt/rh \
+	ghcr.io/pulp-platform/deeploy:latest \
+	nonfree/new_testing_setup/deeploy_ci.sh
+
+run_chipsit_deeploy_container_interactive:
 	podman run --rm -it \
 	-v /tools:/tools:ro \
 	-v /opt/riscv:/opt/riscv:ro \
