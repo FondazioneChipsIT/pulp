@@ -240,7 +240,7 @@ build_gvsoc_mchan: gvsoc gvsoc_venv
 	$(MAKE) clean build TARGETS=pulp-open
 
 DEEPLOY_REMOTE := https://github.com/FondazioneChipsIT/Deeploy.git
-DEEPLOY_COMMIT := 8a05eef1b6090bae2b63c745c5305474cdb2cbc9
+DEEPLOY_COMMIT := 8dc0e2da0c87b8a49b82e61df967cee05cf93abb
 
 deeploy:
 	source setup/deeploy.sh; \
@@ -393,7 +393,7 @@ cdc:
 
 PULP_NONFREE_REMOTE ?= git@gitlab.chips.it:digitalresearchline/chips-restricted/pulp-nonfree.git
 PULP_NONFREE_DIR	?= $(ROOT_DIR)/nonfree
-PULP_NONFREE_COMMIT ?= e23a72f83b054e1a0753581657545ced8688ea80
+PULP_NONFREE_COMMIT ?= 9450e60aaf947b9cf5b8f26ee84fd70701b8aa7b
 
 pulp_nonfree_init:
 	git clone $(PULP_NONFREE_REMOTE) $(PULP_NONFREE_DIR)
