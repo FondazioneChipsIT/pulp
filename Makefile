@@ -259,7 +259,7 @@ deeploy_container:
 	DOCKER_BUILDKIT=1 docker build \
 		--ssh default \
 		--build-context pulp_root=/home/gitlab-runner/ \
-		--build-context llvm_toolchain_dir=/home/gitlab-user/ \
+		--build-context llvm_toolchain_dir=/opt/riscv/ \
 		--build-context toolchains=/opt/riscv/ \
 		-f ${ROOT_DIR}/nonfree/new_testing_setup/Dockerfile.deeploy_container_CI \
 		--build-arg BASE_IMAGE=$(TOOLCHAIN_IMAGE) \
