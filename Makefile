@@ -13,6 +13,7 @@ export RTL_PATH=$(PULP_PATH)/fe/rtl
 export TB_PATH=$(PULP_PATH)/rtl/tb
 
 ROOT_DIR = $(strip $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST)))))
+TOOLCHAINS_DIR ?= /opt/riscv/
 BENDER_GIT_DIR=$(PULP_PATH)/.bender/git/checkouts
 BENDER_BIN ?= $(shell which bender)
 
@@ -255,7 +256,7 @@ deeploy:
 	make minimalloc xtensor; \
 
 # Build the final Deeploy image for chipsit CI
-deeploy_container:
+deeploy_container_CI:
 	eval $$(ssh-agent) && \
 	ssh-add $(SSH_PRIVATE_KEY) && \
 	ssh-add -l && \
@@ -263,7 +264,18 @@ deeploy_container:
 		--ssh default \
 		--build-context pulp_root=/home/gitlab-runner/ \
 		--build-context llvm_toolchain_dir=/opt/riscv/ \
-		--build-context toolchains=/opt/riscv/ \
+		-f ${ROOT_DIR}/nonfree/new_testing_setup/Dockerfile.deeploy_container_CI \
+		--build-arg BASE_IMAGE=$(TOOLCHAIN_IMAGE) \
+		-t $(DEEPLOY_IMAGE) ..
+
+deeploy_container_user:
+	eval $$(ssh-agent) && \
+	ssh-add $(SSH_PRIVATE_KEY) && \
+	ssh-add -l && \
+	podman build \
+		--ssh default \
+		--build-context pulp_root=${HOME} \
+		--build-context llvm_toolchain_dir=${TOOLCHAINS_DIR} \
 		-f ${ROOT_DIR}/nonfree/new_testing_setup/Dockerfile.deeploy_container_CI \
 		--build-arg BASE_IMAGE=$(TOOLCHAIN_IMAGE) \
 		-t $(DEEPLOY_IMAGE) ..
@@ -396,7 +408,7 @@ cdc:
 
 PULP_NONFREE_REMOTE ?= git@gitlab.chips.it:digitalresearchline/chips-restricted/pulp-nonfree.git
 PULP_NONFREE_DIR	?= $(ROOT_DIR)/nonfree
-PULP_NONFREE_COMMIT ?= 648e71adc15153f2812a6ac11be73c670a0bbb35
+PULP_NONFREE_COMMIT ?= e0c94e90da964fae5b85f08f438d1f0363d72890
 
 pulp_nonfree_init:
 	git clone $(PULP_NONFREE_REMOTE) $(PULP_NONFREE_DIR)
