@@ -236,6 +236,9 @@ build_gvsoc: gvsoc gvsoc_venv
 build_gvsoc_mchan: gvsoc gvsoc_venv
 	. "$(VENV)/bin/activate"; \
 	cd gvsoc; \
+	if grep -q 'idma' ./pulp/pulp/chips/pulp_open/cluster.json; then \
+		sed -i 's/idma/mchan/g' ./pulp/pulp/chips/pulp_open/cluster.json; \
+	fi; \
 	source sourceme.sh; \
 	$(MAKE) clean build TARGETS=pulp-open
 
@@ -393,7 +396,7 @@ cdc:
 
 PULP_NONFREE_REMOTE ?= git@gitlab.chips.it:digitalresearchline/chips-restricted/pulp-nonfree.git
 PULP_NONFREE_DIR	?= $(ROOT_DIR)/nonfree
-PULP_NONFREE_COMMIT ?= 7faa0cc0688a39c5cfabf620dd0316098e46e94e
+PULP_NONFREE_COMMIT ?= 903627e5a1d5efd27a351060943c8f4d8bedc267
 
 pulp_nonfree_init:
 	git clone $(PULP_NONFREE_REMOTE) $(PULP_NONFREE_DIR)
