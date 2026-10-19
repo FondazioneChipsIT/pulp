@@ -408,7 +408,7 @@ cdc:
 
 PULP_NONFREE_REMOTE ?= git@gitlab.chips.it:digitalresearchline/chips-restricted/pulp-nonfree.git
 PULP_NONFREE_DIR	?= $(ROOT_DIR)/nonfree
-PULP_NONFREE_COMMIT ?= e0c94e90da964fae5b85f08f438d1f0363d72890
+PULP_NONFREE_COMMIT ?= d1aef261c98ebb96958a3f4015100bfa396fa27f
 
 pulp_nonfree_init:
 	git clone $(PULP_NONFREE_REMOTE) $(PULP_NONFREE_DIR)
@@ -423,7 +423,7 @@ run_chipsit_deeploy_container:
 	-v /opt/riscv:/opt/riscv:ro \
 	-v /opt/rh:/opt/rh \
 	ghcr.io/pulp-platform/deeploy:latest \
-	/bin/bash app/pulp/deeploy_ci.sh
+	/bin/bash app/deeploy_ci.sh
 
 run_chipsit_deeploy_container_interactive:
 	podman run --rm -it \
