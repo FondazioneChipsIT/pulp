@@ -71,24 +71,12 @@ scripts: scripts-bender-vsim scripts-bender-fpga
 include bender-common.mk
 include bender-synth.mk
 
-scripts-bender-vsim-mchan: | Bender.lock
-	echo 'set ROOT [file normalize [file dirname [info script]]/..]' > $(BENDER_SIM_BUILD_DIR)/compile.tcl
-	./bender script vsim \
-		--vlog-arg="$(VLOG_ARGS)" --vcom-arg="" \
-		-t rtl -t test -t pulp -t mchan $(common_defs) $(common_targs) \
-		| grep -v "set ROOT" >> $(BENDER_SIM_BUILD_DIR)/compile.tcl \
-
 scripts-bender-vsim: | Bender.lock
 	echo 'set ROOT [file normalize [file dirname [info script]]/..]' > $(BENDER_SIM_BUILD_DIR)/compile.tcl
 	./bender script vsim \
 		--vlog-arg="$(VLOG_ARGS)" --vcom-arg="" \
 		-t rtl -t test -t pulp -t idma $(common_defs) $(common_targs) \
 		| grep -v "set ROOT" >> $(BENDER_SIM_BUILD_DIR)/compile.tcl \
-
-scripts-bender-fpga-mchan: | Bender.lock
-	mkdir -p fpga/pulp/tcl/generated
-	./bender script vivado -t fpga -t mchan -t rtl $(fpga_defs) $(common_defs) $(common_targs) -t xilinx > $(BENDER_FPGA_SCRIPTS_DIR)/compile.tcl
-	sed -i '/TRACE_EXECUTION/d' $(BENDER_FPGA_SCRIPTS_DIR)/compile.tcl
 
 scripts-bender-fpga: | Bender.lock
 	mkdir -p fpga/pulp/tcl/generated
@@ -226,12 +214,6 @@ build_gvsoc: gvsoc gvsoc_venv
 	. "$(VENV)/bin/activate"; \
 	cd gvsoc; \
 	sed -i 's/mchan/idma/g' ./pulp/pulp/chips/pulp_open/cluster.json; \
-	source sourceme.sh; \
-	$(MAKE) clean build TARGETS=pulp-open
-
-build_gvsoc_mchan: gvsoc gvsoc_venv
-	. "$(VENV)/bin/activate"; \
-	cd gvsoc; \
 	source sourceme.sh; \
 	$(MAKE) clean build TARGETS=pulp-open
 

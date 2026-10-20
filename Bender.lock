@@ -262,13 +262,6 @@ packages:
     source:
       Git: https://github.com/pulp-platform/L2_tcdm_hybrid_interco.git
     dependencies: []
-  mchan:
-    revision: 3f2ae92f78e2ddbd0e079cbb4f81fcc248171c12
-    version: 1.2.4
-    source:
-      Git: https://github.com/pulp-platform/mchan.git
-    dependencies:
-    - common_cells
   neureka:
     revision: 2e076f7d25cdfba38821ee95595bb27aec53c764
     version: null
@@ -296,7 +289,7 @@ packages:
     dependencies:
     - axi_slice
   pulp_cluster:
-    revision: 5aa38cea318ee62924f7724398a609c24bd2105e
+    revision: ae74d2063da138680ec8703e5fec78a74800cd21
     version: null
     source:
       Git: https://github.com/FondazioneChipsIT/pulp_cluster.git
@@ -315,7 +308,6 @@ packages:
     - hier-icache
     - ibex
     - idma
-    - mchan
     - neureka
     - obi
     - per2axi
