@@ -209,6 +209,10 @@ pulp_sdk:
 # sizes and the iDMA model of the cluster DMA.
 GVSOC_URL ?= https://github.com/gvsoc/gvsoc.git
 GVSOC_PULP_BRANCH ?= master
+# Cluster L1 size: the Deeploy tiled flow needs more than the 64 KiB PULP Open ships with
+GVSOC_L1_SIZE ?= 0x00040000
+# Cluster DMA: mchan | idma
+GVSOC_DMA     ?= idma
 
 gvsoc_venv:
 	rm -rf $(VENV) && \
@@ -230,21 +234,16 @@ gvsoc:
 build_gvsoc: gvsoc gvsoc_venv
 	. "$(VENV)/bin/activate"; \
 	cd gvsoc; \
-	sed -i 's/mchan/idma/g' ./pulp/pulp/chips/pulp_open/cluster.json; \
+	sed -i 's/"kind": "[^"]*"/"kind": "$(GVSOC_DMA)"/' ./pulp/pulp/chips/pulp_open/cluster.json; \
+	sed -i '/^    "l1": {/,/"banking_factor"/ s/"size": "0x[0-9a-fA-F]*"/"size": "$(GVSOC_L1_SIZE)"/' ./pulp/pulp/chips/pulp_open/cluster.json; \
 	source sourceme.sh; \
 	$(MAKE) clean build TARGETS=pulp-open
 
-build_gvsoc_mchan: gvsoc gvsoc_venv
-	. "$(VENV)/bin/activate"; \
-	cd gvsoc; \
-	if grep -q 'idma' ./pulp/pulp/chips/pulp_open/cluster.json; then \
-		sed -i 's/idma/mchan/g' ./pulp/pulp/chips/pulp_open/cluster.json; \
-	fi; \
-	source sourceme.sh; \
-	$(MAKE) clean build TARGETS=pulp-open
+build_gvsoc_mchan:
+	$(MAKE) build_gvsoc GVSOC_DMA=mchan
 
 DEEPLOY_REMOTE := https://github.com/FondazioneChipsIT/Deeploy.git
-DEEPLOY_COMMIT := 6aae89a23d63e5df8f2bfb7d43648b4e2e82505b
+DEEPLOY_COMMIT := 2143fddde08b3ce26849a9a98fcd65b6a42b97ca
 
 deeploy:
 	source setup/deeploy.sh; \
