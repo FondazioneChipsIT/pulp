@@ -1,0 +1,35 @@
+diff --git a/pulp/chips/pulp_open/cluster.json b/pulp/chips/pulp_open/cluster.json
+index dc157e8..99d4243 100644
+--- a/pulp/chips/pulp_open/cluster.json
++++ b/pulp/chips/pulp_open/cluster.json
+@@ -38,12 +38,12 @@
+     "l1": {
+         "mapping": {
+             "base": "0x10000000",
+-            "size": "0x00010000",
++            "size": "0x00040000",
+             "remove_offset": "0x10000000"
+         },
+         "ts_mapping": {
+             "base": "0x10100000",
+-            "size": "0x00010000",
++            "size": "0x00040000",
+             "remove_offset": "0x10100000"
+         },
+         "banking_factor": 2,
+@@ -173,7 +173,7 @@
+
+         "dma": {
+             "version": 7,
+-            "kind": "mchan",
++            "kind": "idma",
+             "nb_tcdm_banks": 2,
+             "mapping": {
+                 "base": "0x10201800",
+@@ -209,4 +209,4 @@
+             }
+         }
+     }
+-}
+\ No newline at end of file
++}

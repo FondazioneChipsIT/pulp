@@ -232,11 +232,12 @@ gvsoc:
 	git checkout origin/$(GVSOC_PULP_BRANCH)
 
 build_gvsoc: gvsoc gvsoc_venv
-	. "$(VENV)/bin/activate"; \
-	cd gvsoc; \
-	sed -i 's/"kind": "[^"]*"/"kind": "$(GVSOC_DMA)"/' ./pulp/pulp/chips/pulp_open/cluster.json; \
-	sed -i '/^    "l1": {/,/"banking_factor"/ s/"size": "0x[0-9a-fA-F]*"/"size": "$(GVSOC_L1_SIZE)"/' ./pulp/pulp/chips/pulp_open/cluster.json; \
-	source sourceme.sh; \
+	. "$(VENV)/bin/activate" && \
+	cd gvsoc/pulp && \
+	(git apply --reverse --check $(CURDIR)/setup/gvsoc_pulp_open.patch 2>/dev/null || \
+	 git apply $(CURDIR)/setup/gvsoc_pulp_open.patch) && \
+	cd .. && \
+	source sourceme.sh && \
 	$(MAKE) clean build TARGETS=pulp-open
 
 build_gvsoc_mchan:
