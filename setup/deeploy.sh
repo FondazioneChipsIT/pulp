@@ -7,7 +7,7 @@ export GVSOC_INSTALL_DIR=$ROOT/gvsoc/install
 if [[ -v IS_CONTAINER ]]; then
     export LLVM_INSTALL_DIR=/app/install/deeploy_llvm
 else
-    export LLVM_INSTALL_DIR=/opt/riscv/snitch-llvm-15.0.0-snitch-0.1.0/
+    export LLVM_INSTALL_DIR=/opt/riscv/llvm-20.1.8-2dcfd2d/
 fi
 export GCC_INSTALL_DIR=/opt/riscv/pulp-gcc-1.0.16/
 export CMAKE=/usr/bin/cmake
