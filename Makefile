@@ -244,7 +244,7 @@ build_gvsoc_mchan:
 	$(MAKE) build_gvsoc GVSOC_DMA=mchan
 
 DEEPLOY_REMOTE := https://github.com/FondazioneChipsIT/Deeploy.git
-DEEPLOY_COMMIT := a1b85b44a1cca4430037a6d116db2057e2b93709
+DEEPLOY_COMMIT := a972b26ada90d18621046d459da7c7ede252892d
 
 deeploy:
 	source setup/deeploy.sh; \
