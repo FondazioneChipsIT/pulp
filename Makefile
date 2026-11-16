@@ -408,7 +408,7 @@ cdc:
 
 PULP_NONFREE_REMOTE ?= git@gitlab.chips.it:digitalresearchline/chips-restricted/pulp-nonfree.git
 PULP_NONFREE_DIR	?= $(ROOT_DIR)/nonfree
-PULP_NONFREE_COMMIT ?= 1821e40b7e7b17dd73876f147e21b48f5b40a201
+PULP_NONFREE_COMMIT ?= 73dcd1f07f679c0c992ccb1db40fdcc886e5ac81
 
 pulp_nonfree_init:
 	git clone $(PULP_NONFREE_REMOTE) $(PULP_NONFREE_DIR)
