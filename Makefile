@@ -209,6 +209,7 @@ pulp_sdk:
 # sizes and the iDMA model of the cluster DMA.
 GVSOC_URL ?= https://github.com/gvsoc/gvsoc.git
 GVSOC_PULP_BRANCH ?= master
+GVSOC_COMMIT ?= 753056fbf2da60a16be4d58eba5c38f70b8c6af8
 # Cluster L1 size: the Deeploy tiled flow needs more than the 64 KiB PULP Open ships with
 GVSOC_L1_SIZE ?= 0x00040000
 # Cluster DMA: mchan | idma
@@ -227,9 +228,8 @@ gvsoc:
 	git clone $(GVSOC_URL); \
 	cd gvsoc; \
 	git submodule update --init --recursive; \
-	cd pulp; \
 	git fetch origin; \
-	git checkout origin/$(GVSOC_PULP_BRANCH)
+	git checkout $(GVSOC_COMMIT)
 
 build_gvsoc: gvsoc gvsoc_venv
 	. "$(VENV)/bin/activate" && \
